@@ -4,6 +4,12 @@
         <script>
             var aniListAPI = new aniListAPI();
             
+            document.addEventListener('aniListAPIready', function (e) {
+                console.log(JSON.stringify(aniListAPI.authToken));
+                aniListAPI.getGenres(function (data) {
+                    console.log(data);
+                });
+            }, true);
         </script>
     </head>
     

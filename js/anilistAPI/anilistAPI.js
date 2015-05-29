@@ -5,6 +5,7 @@
 function aniListAPI() {
     var postData;
     
+    this.ready = false;
     this.authToken = {};
     this.anime = {};
     this.apiPrefix = "https://anilist.co/api/";
@@ -17,26 +18,54 @@ function aniListAPI() {
         return postString.substring(0, postString.length - 1);
     };
     
-    this.getAuthToken = function () {
-        var apihttp = new XMLHttpRequest();
-        apihttp.onreadystatechange = function () {
-            if ((apihttp.readyState === 3 || apihttp.readyState === 4 ) && apihttp.status === 200) {
-                this.authToken = JSON.parse(apihttp.responseText);
+    this.getAuthToken = function (callback) {
+        var xhr = new XMLHttpRequest();
+        var completed = false;
+        this.ready = false;
+        xhr.parent = this;
+        xhr.onreadystatechange = function () {
+            if ((xhr.readyState === 3 || xhr.readyState === 4) && !completed ) {
+                if (xhr.status === 200) {
+                    var token = JSON.parse(xhr.responseText);
+                    if (typeof token.access_token === 'string') {
+                        this.parent.authToken = token;
+                        completed = true;
+                        this.parent.ready = true;
+                        if (typeof callback === 'function') {
+                            callback();
+                        }
+                    }
+                } else if (xhr.readyState === 4 && xhr.status != 200) {
+                    completed = true;
+                    throw xhr.status + ' ' + xhr.responseText;
+                }
             }
         };
-        apihttp.open("POST", this.apiPrefix + "auth/access_token", true);
-        apihttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.open("POST", this.apiPrefix + "auth/access_token", true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         postData = {
             grant_type: "client_credentials",
             client_id: "rfctkssparkle-1vxvz",
             client_secret: "TOIVn8wO3obEoxeJPyd"
         };
-        apihttp.send(this.generateRequestString(postData));
+        xhr.send(this.generateRequestString(postData));
     };
     
-    this.renewToken = function () {
+    //Checks if token is expired.
+    this.isTokenExpired = function () {
         if (this.authToken.expires <= Math.floor(Date.now() / 1000)) {
-            this.getAuthToken();
+            return true;
+        } else {
+            return false;
+        }
+    };
+    
+    //Tries to renew token, callback will ALWAYS execute with valid token.
+    this.renewToken = function (callback) {
+        if (this.isTokenExpired()) {
+            this.getAuthToken(callback);
+        } else {
+            callback();
         }
     };
     
@@ -59,42 +88,48 @@ function aniListAPI() {
         If failed, second parameter is XMLHttpRequest object for additional information.
     */
     this.apiRequest = function (method, urlSuffix, requestData, callback) {
-        var apihttp = new XMLHttpRequest();
-        apihttp.onreadystatechange = function () {
-            if (apihttp.readyState === 4 && apihttp.status === 200 && typeof callback === 'function') {
-                callback(true, JSON.parse(apihttp.responseText));
-            } else {
-                callback(false, apihttp);
-            }
-        };
-        this.renewToken();
-        apihttp.setRequestHeader("access_token", this.authToken.access_token);
+        console.log(method);
+        console.log(urlSuffix);
         try {
-            if (!(method.toUpperCase === "POST" || method.toUpperCase === "GET")) {
+            if (!(method.toUpperCase() === "POST" || method.toUpperCase() === "GET")) {
                 throw "InvalidRequestMethodException";
             }
-            if (method.toUpperCase === "GET" && typeof requestData === 'function') {
+            if (method.toUpperCase() === "GET" && typeof requestData === 'function') {
                 callback = requestData;
                 requestData = undefined;
             }
-            if (method.toUpperCase === "POST" && !(typeof requestData === 'object')) {
+            if (method.toUpperCase() === "POST" && !(typeof requestData === 'object')) {
                 throw "InvalidPostDataException";
             }
-            switch (method) {
-                case "GET":
-                    apihttp.open(method.toUpperCase, this.apiPrefix + this.apiPath + '?' + generateRequestString(requestData) , true);
-                    apihttp.send();
-                    break;
-                case "POST":
-                    apihttp.open(method.toUpperCase, this.apiPrefix + this.apiPath, true);
-                    apihttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                    apihttp.send(this.generateRequestString(requestData));
-                    break;
-            }
-            return true;
         } catch (err) {
             return false;
         }
+        var xhr = new XMLHttpRequest();
+        var context = this;
+        xhr.onreadystatechange = function () {
+            console.log(xhr.responseText);
+            if (xhr.readyState === 4 && xhr.status === 200 && typeof callback === 'function') {
+                callback(true, JSON.parse(xhr.responseText));
+            } else {
+                callback(false, xhr);
+            }
+        };
+        this.renewToken(function () {
+            switch (method) {
+                    case "GET":
+                        xhr.open(method.toUpperCase(), context.apiPrefix + urlSuffix + '?' + context.generateRequestString(requestData) , true);
+                        xhr.setRequestHeader("Authorization", context.authToken.access_token);
+                        xhr.send();
+                        break;
+                    case "POST":
+                        xhr.open(method.toUpperCase(), context.apiPrefix + context.apiPath, true);
+                        xhr.setRequestHeader("Authorization", context.authToken.access_token);
+                        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                        xhr.send(context.generateRequestString(requestData));
+                        break;
+                }
+        });
+        return true;
     };
     
     this.getGenres = function (callback) {
@@ -134,5 +169,8 @@ function aniListAPI() {
     
     
     //Initialize object
-    this.getAuthToken();
+    this.getAuthToken(function () {
+        var event = new Event('aniListAPIready');
+        document.dispatchEvent(event);
+    });
 }

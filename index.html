@@ -14,9 +14,13 @@
         </style>
         <script>
             var aniListAPI = new aniListAPI();
+            function onReady() {
+
+            }
+            document.addEventListener("WebComponentsReady",onReady,false);
         </script>
     </head>
     <body unresolved>
-        <body-view style="height=100%;width=100%;"></body-view>
+        <body-view style="height=100%;width=100%;" id="bodyView"></body-view>
     </body>
 </html>
