@@ -65,7 +65,9 @@
     "paper-tabs": "PolymerElements/paper-tabs#1.0.0",
     "paper-toast": "PolymerElements/paper-toast#1.0.0",
     "paper-toggle-button": "PolymerElements/paper-toggle-button#1.0.0",
-    "paper-toolbar": "PolymerElements/paper-toolbar#1.0.0"
+    "paper-toolbar": "PolymerElements/paper-toolbar#1.0.0",
+    "google-url-shortener": "GoogleWebComponents/google-url-shortener#1.0.0",
+    "google-youtube": "GoogleWebComponents/google-youtube#1.1.0"
   },
   "install": {
     "path": "components"

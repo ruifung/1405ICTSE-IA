@@ -5,35 +5,24 @@ html, body {
     padding: 0;
 }
 
-.rightPane {
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    width: 50%;
-}
-
 .hidden {
     display: none;
 }
 
-.navBar {
+#navBar {
     top: 0px;
     left: 0px;
     height: 50px;
     width: 100%
 }
 
-.mainView {
+#navBar #topBar,#middleBar,#bottomBar {
+    height: 50px;
+    margin: 0px;
+    padding: 0px;
+}
+
+#drawerPanel {
     top:50px;
     height: calc(100% - 50px);
-}
-
-.mainViewContent {
-    top: 0px;
-    height: 100%;
-}
-
-core-toolbar.navBar::shadow #topBar {
-    height: 50px;
-    padding: 0px;
 }

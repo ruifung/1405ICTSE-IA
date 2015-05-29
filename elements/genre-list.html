@@ -1,0 +1,20 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="genre-list">
+
+</dom-module>
+
+<script>
+    Polymer({
+        is: 'genre-list',
+        listeners: {
+            'anilist-authTokenUpdate': 'updateAuthToken'
+        },
+        authToken: "";
+    });
+    
+    function updateAuthToken(e) {
+        
+    };
+</script>
