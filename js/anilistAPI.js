@@ -1,4 +1,4 @@
-/*jslint browser: true/
+/*jslint browser: true,-W018*/
 /*global generateRequestString*/
 
 // Reference for usage: http://anilist-api.readthedocs.org/en/stable/anime.html
@@ -91,12 +91,12 @@ function aniListAPI() {
     
     this.getGenres = function (callback) {
         return this.apiRequest("GET", "genre_list", callback);
-    }
+    };
     
     this.anime.get = function (type, animeID, callback) {
         var urlSuffix = "anime/" + animeID;
         switch (type.toLowerCase) {
-            case "page"
+            case "page":
                 urlSuffix = urlSuffix + "/page";
                 break;
             case "characters":
