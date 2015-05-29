@@ -1,5 +1,4 @@
 /*jslint browser: true,-W018*/
-/*global generateRequestString*/
 
 // Reference for usage: http://anilist-api.readthedocs.org/en/stable/anime.html
 
@@ -7,23 +6,32 @@ function aniListAPI() {
     var postData;
     
     this.authToken = {};
-    this.apiPrefix = "http://anilist.co/api/";
+    this.anime = {};
+    this.apiPrefix = "https://anilist.co/api/";
+    
+    this.generateRequestString = function (postData) {
+        var postString = "";
+        for(var key in postData) {
+            postString = postString.concat(key+'='+encodeURIComponent(postData[key])+'&');
+        }
+        return postString.substring(0, postString.length - 1);
+    };
     
     this.getAuthToken = function () {
         var apihttp = new XMLHttpRequest();
         apihttp.onreadystatechange = function () {
-            if (apihttp.readyState === 4 && apihttp.status === 200) {
+            if ((apihttp.readyState === 3 || apihttp.readyState === 4 ) && apihttp.status === 200) {
                 this.authToken = JSON.parse(apihttp.responseText);
             }
         };
-        apihttp.open("POST", this.apiPrefix + "auth/access_token", true);
+        apihttp.open("POST", this.apiPrefix + "auth/access_token", false);
         apihttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         postData = {
             grant_type: "client_credentials",
             client_id: "rfctkssparkle-1vxvz",
             client_secret: "TOIVn8wO3obEoxeJPyd"
         };
-        apihttp.send(generateRequestString(postData));
+        apihttp.send(this.generateRequestString(postData));
     };
     
     this.renewToken = function () {
@@ -80,7 +88,7 @@ function aniListAPI() {
                 case "POST":
                     apihttp.open(method.toUpperCase, this.apiPrefix + this.apiPath, true);
                     apihttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                    apihttp.send(generateRequestString(requestData));
+                    apihttp.send(this.generateRequestString(requestData));
                     break;
             }
             return true;
@@ -123,4 +131,8 @@ function aniListAPI() {
         var urlSuffix = "anime/search/" + encodeURIComponent(query);
         return this.apiRequest("GET", urlSuffix, callback);
     };
+    
+    
+    //Initialize object
+    this.getAuthToken();
 }

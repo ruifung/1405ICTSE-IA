@@ -1,0 +1,45 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-drawer-panel/paper-drawer-panel.html">
+<link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="main-view.html">
+
+<dom-module id="body-view">
+    <style>
+        #navBar {
+            top: 0px;
+            left: 0px;
+            height: 50px;
+            width: 100%
+        }
+
+        #navBar #topBar,#middleBar,#bottomBar {
+            height: 50px;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #drawerPanel {
+            top:50px;
+            height: calc(100% - 50px);
+        }
+    </style>
+    
+    <template>
+        <paper-toolbar id="navBar"> 
+        </paper-toolbar>
+        <paper-drawer-panel id="drawerPanel" force-narrow="true">
+            <iron-pages drawer selected="genres">
+                <genre-list id="genreList" name="genres">
+                    
+                </genre-list>
+            </iron-pages>
+            <main-view main id="mainView">Main</main-view>
+        </paper-drawer-panel>
+        
+    </template>
+</dom-module>
+
+<script>
+</script>
