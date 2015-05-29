@@ -74,7 +74,6 @@ function aniListAPI() {
             }
         }.bind(this);
         
-        xhr.timeout = this.timeout;
         xhr.ontimeout = function () {
             if (this.authRetries < this.retryCount) {
                 this.authRetries++;
@@ -84,6 +83,7 @@ function aniListAPI() {
             }
         }.bind(this);
         xhr.open("POST", this.apiPrefix + "auth/access_token", true);
+        xhr.timeout = this.timeout;
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         postData = {
             grant_type: "client_credentials",
