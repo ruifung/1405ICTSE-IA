@@ -24,7 +24,7 @@ function aniListAPI() {
                 this.authToken = JSON.parse(apihttp.responseText);
             }
         };
-        apihttp.open("POST", this.apiPrefix + "auth/access_token", false);
+        apihttp.open("POST", this.apiPrefix + "auth/access_token", true);
         apihttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         postData = {
             grant_type: "client_credentials",
