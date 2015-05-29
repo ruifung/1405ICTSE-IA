@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+        <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+        <script src="js/anilistAPI.js"></script>
         
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
         <link rel="stylesheet" type="text/css" href="css/main.css">
         
         <link rel="import" href="elements/body-view.html">
-        <link rel="import" href="js/anilistAPI/anilistAPI.html">
         
         <style>
+
         </style>
         <script>
-            var aniListAPI = new aniListAPI();
+            var alAPI;
+            alAPI = new aniListAPI();
             function onReady() {
-                aniListAPI.init();
+                alAPI.init();
             }
             document.addEventListener("WebComponentsReady",onReady,false);
         </script>

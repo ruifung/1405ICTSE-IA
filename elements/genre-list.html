@@ -28,7 +28,7 @@
             this.updateList();
         },
         updateList: function() {
-            aniListAPI.getGenres(function (status, data) {
+            alAPI.getGenres(function (status, data) {
                 console.log("setGenre");
                 if (status) {
                     this.genres = data;
