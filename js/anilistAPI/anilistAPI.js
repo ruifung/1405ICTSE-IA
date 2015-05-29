@@ -8,6 +8,7 @@ function aniListAPI() {
     this.ready = false;
     this.authToken = {};
     this.anime = {};
+    this.pendingRequests = [];
     this.apiPrefix = "https://anilist.co/api/";
     
     this.generateRequestString = function (postData) {
@@ -18,6 +19,7 @@ function aniListAPI() {
         return postString.substring(0, postString.length - 1);
     };
     
+    //Get a authentication token for the API.
     this.getAuthToken = function (callback) {
         var xhr = new XMLHttpRequest();
         var completed = false;
@@ -26,17 +28,26 @@ function aniListAPI() {
         xhr.onreadystatechange = function () {
             if ((xhr.readyState === 3 || xhr.readyState === 4) && !completed ) {
                 if (xhr.status === 200) {
+                    //Parse and verify token.
                     var token = JSON.parse(xhr.responseText);
                     if (typeof token.access_token === 'string') {
                         this.parent.authToken = token;
                         completed = true;
                         this.parent.ready = true;
+                        
+                        //Call the callback if present.
                         if (typeof callback === 'function') {
                             callback();
+                        }
+                        
+                        //Process queued requests.
+                        while (this.parent.pendingRequests.length > 0) {
+                            this.parent.pendingRequests.shift()();
                         }
                     }
                 } else if (xhr.readyState === 4 && xhr.status != 200) {
                     completed = true;
+                    this.parent.ready = true;
                     throw xhr.status + ' ' + xhr.responseText;
                 }
             }
@@ -88,8 +99,9 @@ function aniListAPI() {
         If failed, second parameter is XMLHttpRequest object for additional information.
     */
     this.apiRequest = function (method, urlSuffix, requestData, callback) {
-        console.log(method);
-        console.log(urlSuffix);
+        var context = this;
+        
+        // To simulate function overloading. =/
         try {
             if (!(method.toUpperCase() === "POST" || method.toUpperCase() === "GET")) {
                 throw "InvalidRequestMethodException";
@@ -102,10 +114,20 @@ function aniListAPI() {
                 throw "InvalidPostDataException";
             }
         } catch (err) {
-            return false;
+            callback(false,err);
         }
+        
+        //If the API is not ready (E.g. renewing auth token), queue the request to be processed later.
+        if (!this.ready) {
+            this.pendingRequests.push(function () {
+                context.apiRequest(method, urlSuffix, requestData, callback);
+            });
+            return;
+        }
+        
         var xhr = new XMLHttpRequest();
-        var context = this;
+        
+        //Callback to process state changes.
         xhr.onreadystatechange = function () {
             console.log(xhr.responseText);
             if (xhr.readyState === 4 && xhr.status === 200 && typeof callback === 'function') {
@@ -114,6 +136,8 @@ function aniListAPI() {
                 callback(false, xhr);
             }
         };
+        
+        //Renew the token if required, pass rest of the function as a callback to the renewToken method.
         this.renewToken(function () {
             switch (method) {
                     case "GET":
@@ -129,11 +153,12 @@ function aniListAPI() {
                         break;
                 }
         });
-        return true;
     };
     
+    // API REQUEST METHODS START HERE
+     
     this.getGenres = function (callback) {
-        return this.apiRequest("GET", "genre_list", callback);
+        this.apiRequest("GET", "genre_list", callback);
     };
     
     this.anime.get = function (type, animeID, callback) {
@@ -155,11 +180,11 @@ function aniListAPI() {
                 urlSuffix = urlSuffix + "/airing";
                 break;
         }
-        return this.apiRequest("GET", urlSuffix, callback);
+        this.apiRequest("GET", urlSuffix, callback);
     };
     
-    this.anime.browse = function (options,callback) {
-        return this.apiRequest("GET", "browse/anime", options, callback);
+    this.anime.browse = function (options, callback) {
+        this.apiRequest("GET", "browse/anime", options, callback);
     };
     
     this.anime.search = function (query, callback) {
