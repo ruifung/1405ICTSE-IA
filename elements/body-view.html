@@ -3,6 +3,7 @@
 <link rel="import" href="../bower_components/paper-drawer-panel/paper-drawer-panel.html">
 <link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="genre-list.html">
 <link rel="import" href="main-view.html">
 
 <dom-module id="body-view">
@@ -30,11 +31,11 @@
         <paper-toolbar id="navBar"> 
         </paper-toolbar>
         <paper-drawer-panel id="drawerPanel" force-narrow="true">
-            <iron-pages drawer selected="genres">
+            <div drawer style="overflow-y:auto;">
                 <genre-list id="genreList" name="genres">
                     
                 </genre-list>
-            </iron-pages>
+            </div>
             <main-view main id="mainView">Main</main-view>
         </paper-drawer-panel>
         
@@ -45,10 +46,7 @@
     Polymer({
         is: 'body-view',
         properties: {
-            testProp: {
-                type: 'string',
-                value: 'testing'
-            }
-        }
+            
+        },
     });
 </script>
