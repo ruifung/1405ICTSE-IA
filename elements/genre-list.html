@@ -2,6 +2,8 @@
 
 <link rel="import" href="../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/paper-styles/paper-styles.html">
 <link rel="import" href="../bower_components/iron-resizable-behavior/iron-resizable-behavior.html">
 
@@ -9,22 +11,36 @@
     <style>
         .genreItem {
             cursor: pointer;
+            transition: box-shadow 0.2s, transform 0.2s, font-weight 0.2s;
         }
         .iron-selected {
             box-shadow: 0 -2px 2px 0 rgba(0, 0, 0, 0.14),
             0 -1px 5px 0 rgba(0, 0, 0, 0.12),
             0 -3px 1px -2px rgba(0, 0, 0, 0.2);
+            transform: perspective(500px) rotateX(-20deg) rotateY(0deg) rotateZ(0deg);
             transform-origin: 50% 100%;
-            transform: perspective(500px) rotateX(-25deg) rotateY(0deg) rotateZ(0deg);
         }
-        .genreItem {
-            transition: box-shadow 0.2s linear, transform 0.2s linear;
+        #genreMenu {
+            padding-top: 1.5px;
+            padding-bottom: 0px;
+        }
+        .genreItem > iron-icon {
+            position: absolute;
+            padding: 10px;
+            padding-top: 11px;
+            right: 0;
+            opacity: 0;
+            color: chartreuse;
+            transition: opacity 0.2s;
+        }
+        .genreItem.iron-selected > iron-icon {
+            opacity: 1;
         }
     </style>
     <template>
         <paper-menu id="genreMenu" attr-for-selected="genreId" selected-values="{{selectedGenres}}" multi>
             <template is="dom-repeat" id="genreRepeat" items="{{genres}}">
-                    <paper-item genre-id="[[item.id]]" class="genreItem">[[item.genre]]</paper-item>
+                    <paper-item genre-id="[[item.id]]" class="genreItem"><span>[[item.genre]]</span><iron-icon icon="check-circle"></iron-icon></paper-item>
             </template>
         </paper-menu>
     </template>
