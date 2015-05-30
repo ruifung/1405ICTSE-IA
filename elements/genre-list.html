@@ -1,6 +1,8 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+
 <link rel="import" href="../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-styles/paper-styles.html">
 <link rel="import" href="../bower_components/iron-resizable-behavior/iron-resizable-behavior.html">
 
 <dom-module id="genre-list">
@@ -8,11 +10,21 @@
         .genreItem {
             cursor: pointer;
         }
+        .iron-selected {
+            box-shadow: 0 -2px 2px 0 rgba(0, 0, 0, 0.14),
+            0 -1px 5px 0 rgba(0, 0, 0, 0.12),
+            0 -3px 1px -2px rgba(0, 0, 0, 0.2);
+            transform-origin: 50% 100%;
+            transform: perspective(500px) rotateX(-15deg) rotateY(0deg) rotateZ(0deg);
+        }
+        .genreItem {
+            transition: box-shadow 0.2s linear, transform 0.25s linear;
+        }
     </style>
     <template>
         <paper-menu id="genreMenu" attr-for-selected="genreId" selected-values="{{selectedGenres}}" multi>
             <template is="dom-repeat" id="genreRepeat" items="{{genres}}">
-                <paper-item genre-id="[[item.id]]" class="genreItem">[[item.genre]]</paper-item>
+                    <paper-item genre-id="[[item.id]]" class="genreItem">[[item.genre]]</paper-item>
             </template>
         </paper-menu>
     </template>

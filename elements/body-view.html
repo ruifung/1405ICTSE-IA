@@ -1,15 +1,21 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../bower_components/paper-drawer-panel/paper-drawer-panel.html">
-<link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
-<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
-<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+
 <link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
+<link rel="import" href="../bower_components/paper-drawer-panel/paper-drawer-panel.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/paper-material/paper-material.html">
 
-<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+
 <link rel="import" href="../bower_components/observe-js/observe-js.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+
 <link rel="import" href="genre-list.html">
 <link rel="import" href="anime-view.html">
 
@@ -21,7 +27,13 @@
             height: 50px;
             width: 100%
         }
-
+        
+        #navBar #busySpinner {
+            position: absolute;
+            margin: 10px;
+            right: 0px;
+        }
+        
         #navBar::shadow .paper-toolbar {
             height: 50px;
             margin: 0px;
@@ -48,8 +60,8 @@
     </style>
     
     <template>
-        
         <paper-drawer-panel id="drawerPanel" selected="{{drawerPanelView}}">
+            
             <!-- THE DRAWER -->
             <paper-material drawer elevation="2">
                 <paper-header-panel>
@@ -69,6 +81,7 @@
                     </iron-pages>
                 </paper-header-panel>
             </paper-material>
+            
             <!-- MAIN VIEW -->
             <iron-pages main id="mainSelector" attr-for-selected="id" selected="animeView">
                 Placeholder Text
