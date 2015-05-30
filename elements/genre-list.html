@@ -2,15 +2,14 @@
 <link rel="import" href="../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 
-
 <dom-module id="genre-list">
     <style>
     
     </style>
     <template>
-        <paper-menu attr-for-selected="genreid">
+        <paper-menu id="genreMenu" attr-for-selected="genreId" selected-values="{{selectedGenres}}" multi>
             <template is="dom-repeat" id="genreRepeat" items="{{genres}}">
-                <paper-item genreid="{{item.id}}">{{item.genre}}</paper-item>
+                <paper-item genre-id="[[item.id]]">[[item.genre]]</paper-item>
             </template>
         </paper-menu>
     </template>
@@ -18,23 +17,33 @@
 
 <script>
     Polymer({
-        is: 'genre-list',
-        genres: [],
-        listeners: {
-             
+        is: "genre-list",
+        properties: {
+            genres: {
+                type: 'array',
+                readOnly: true,
+                value: function() {
+                    return [];
+                },
+                notify: true
+            },
+            selectedGenres: {
+                type: "array",
+                notify: true,
+                value: function() {
+                    return [];
+                },
+            }
         },
         ready: function() {
-            console.log("genre ready");
             this.updateList();
         },
         updateList: function() {
             alAPI.getGenres(function (status, data) {
-                console.log("setGenre");
                 if (status) {
-                    this.genres = data;
-                    console.log(data);
+                    this._setGenres(data);
                 }
             }.bind(this))
-        },
+        }
     });
 </script>

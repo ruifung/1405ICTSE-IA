@@ -1,0 +1,15 @@
+{
+  "name": "custom-event-polyfill",
+  "homepage": "https://github.com/krambuhl/custom-event-polyfill",
+  "version": "0.2.1",
+  "_release": "0.2.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.2.1",
+    "commit": "2e337b29ed893fbd339586a4cfedca30755241dc"
+  },
+  "_source": "git://github.com/krambuhl/custom-event-polyfill.git",
+  "_target": "~0.2.1",
+  "_originalSource": "krambuhl/custom-event-polyfill",
+  "_direct": true
+}

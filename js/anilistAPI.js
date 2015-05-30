@@ -25,7 +25,6 @@ function aniListAPI() {
     
     this.executeQueue = function() {
         while (this.pendingRequests.length > 0) {
-            console.log("Executing Queued Request");
             this.pendingRequests.shift()();
         }
     };
@@ -33,12 +32,10 @@ function aniListAPI() {
     //Get a authentication token for the API.
     this.authRetries = 0;
     this.getAuthToken = function (callback) {
-        console.log("authToken");
         var xhr = new XMLHttpRequest();
         var completed = false;
         this.ready = false;
         xhr.onreadystatechange = function () {
-            console.log("authCallback");
             if ((xhr.readyState === 4) && !completed ) {
                 if (xhr.status === 200) {
                     //Parse and verify token.
@@ -48,10 +45,10 @@ function aniListAPI() {
                         completed = true;
                         this.ready = true;
                         
+                        //Save token to sessionStorage
                         if(typeof(Storage) !== "undefined") {
                             sessionStorage.setItem("anilist.api.authtoken",JSON.stringify(token));
                         }
-                        
                         
                         //Call the callback if present.
                         if (typeof callback === 'function') {
@@ -95,7 +92,7 @@ function aniListAPI() {
     
     //Checks if token is expired.
     this.isTokenExpired = function () {
-        if (this.authToken.expires <= (Math.floor(Date.now() / 1000)) - 60 ) {
+        if (this.authToken.expires <= (Math.floor(Date.now() / 1000))) {
             return true;
         } else {
             return false;
@@ -105,10 +102,8 @@ function aniListAPI() {
     //Tries to renew token, callback will ALWAYS execute with valid token.
     this.renewToken = function (callback) {
         if (this.isTokenExpired()) {
-            console.log("renew1");
             this.getAuthToken(callback);
         } else {
-            console.log("renew2");
             this.ready = true;
             callback();
         }
@@ -133,7 +128,6 @@ function aniListAPI() {
         If failed, second parameter is XMLHttpRequest object for additional information.
     */
     this.apiRequest = function (method, urlSuffix, requestData, callback) {
-        console.log("aniApiReq:"+method+';'+urlSuffix);
         // To simulate function overloading. =/
         try {
             if (!(method.toUpperCase() === "POST" || method.toUpperCase() === "GET")) {
@@ -152,8 +146,6 @@ function aniListAPI() {
         
         //If the API is not ready (E.g. renewing auth token), queue the request to be processed later.
         if (!this.ready) {
-            console.log(this.ready);
-            console.log("queuedReq");
             var context = {
                 env: this,
                 method: method,
@@ -171,13 +163,17 @@ function aniListAPI() {
         xhr.timeout = this.timeout;
         //Callback to process state changes.
         xhr.onreadystatechange = function () {
-            console.log(xhr.responseText);
             if (xhr.readyState === 4 && xhr.status === 200 && typeof callback === 'function') {
                 callback(true, JSON.parse(xhr.responseText));
             } else {
-                callback(false, "reqfailed", xhr);
+                if (xhr.status === 401) {
+                    this.apiRequest(method, urlSuffix, requestData, callback);
+                }
+                else {
+                    callback(false, "reqfailed", xhr);
+                }
             }
-        };
+        }.bind(this);
         
         xhr.ontimeout = function () {
             callback(false,"timeout");
@@ -241,31 +237,23 @@ function aniListAPI() {
     
     //Initialize object
     this.init = function () {
-        console.log("init1");
         if (this.initialized) {
             return;
         }
-        console.log("init2");
         var apiReady = function () {
-            console.log("init-evnt");
-            var event = new Event('AnilistAPIReady');
+            var event = new CustomEvent('AnilistAPIReady');
             document.dispatchEvent(event);
             this.executeQueue();
         }.bind(this);
         
         if(typeof(Storage) !== "undefined") {
-            console.log("init3");
             this.authToken = JSON.parse(sessionStorage.getItem("anilist.api.authtoken"));
             try {
-                console.log("init4");
                 this.renewToken(apiReady);
-                console.log(this.authToken);
             } catch(err) {
-                console.log("init5");
                 this.getAuthToken(apiReady);
             }
         } else {
-            console.log("init6");
             this.getAuthToken(apiReady);
         }
     };

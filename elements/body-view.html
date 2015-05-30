@@ -2,7 +2,11 @@
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-drawer-panel/paper-drawer-panel.html">
 <link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/observe-js/observe-js.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="genre-list.html">
 <link rel="import" href="main-view.html">
 
@@ -15,7 +19,7 @@
             width: 100%
         }
 
-        #navBar #topBar,#middleBar,#bottomBar {
+        #navBar::shadow .paper-toolbar {
             height: 50px;
             margin: 0px;
             padding: 0px;
@@ -28,13 +32,15 @@
     </style>
     
     <template>
-        <paper-toolbar id="navBar"> 
+        <paper-toolbar id="navBar">
+            <paper-button id="genreButton">Genres</paper-button>
+            <paper-button>Season</paper-button>
         </paper-toolbar>
         <paper-drawer-panel id="drawerPanel" force-narrow="true">
             <div drawer style="overflow-y:auto;">
-                <genre-list id="genreList" name="genres">
-                    
-                </genre-list>
+                <iron-pages id="sidebarSelector" attr-for-selected="id">
+                    <genre-list id="genres" selected-genres="{{selectedGenres}}"></genre-list>
+                </iron-pages>
             </div>
             <main-view main id="mainView">Main</main-view>
         </paper-drawer-panel>
@@ -45,8 +51,48 @@
 <script>
     Polymer({
         is: 'body-view',
+        drawerView: "",
         properties: {
-            
+            selectedGenres: {
+                type: "array",
+                notify: true,
+                observer: "genresObserver"
+            },
+        },
+        
+        ready: function() {
+            this.registerButtonHandlers();
+        },
+        
+        //Because I can't get 
+        genresObserver: function(newV,oldV) {
+            if (typeof oldV !== 'undefined') {
+                oldV.observer.close();
+            }
+            var onSelectionChanged = function(changes) {
+            }.bind(this);
+            newV.observer = new ArrayObserver(newV);
+            newV.observer.open(onSelectionChanged);
+        },
+        
+        registerButtonHandlers: function() {
+            this.$.genreButton.onclick = function() {
+                this.onSidebarButtonClick("genres");
+            }.bind(this);
+        },
+        
+        onSidebarButtonClick: function(button) {
+            var drawerOpen = (this.$.drawerPanel.selected === 'drawer');
+            if (drawerOpen && this.$.sidebarSelector.selected === button) {
+                this.$.drawerPanel.closeDrawer();
+                return;
+            }
+            switch(button) {
+                case "genres":
+                    this.$.sidebarSelector.selected = button;
+                    break;
+            }
+            this.$.drawerPanel.openDrawer();
         },
     });
 </script>
