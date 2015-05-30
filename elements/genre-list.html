@@ -5,12 +5,14 @@
 
 <dom-module id="genre-list">
     <style>
-    
+        .genreItem {
+            cursor: pointer;
+        }
     </style>
     <template>
         <paper-menu id="genreMenu" attr-for-selected="genreId" selected-values="{{selectedGenres}}" multi>
             <template is="dom-repeat" id="genreRepeat" items="{{genres}}">
-                <paper-item genre-id="[[item.id]]">[[item.genre]]</paper-item>
+                <paper-item genre-id="[[item.id]]" class="genreItem">[[item.genre]]</paper-item>
             </template>
         </paper-menu>
     </template>
