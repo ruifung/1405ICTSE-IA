@@ -1,0 +1,33 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="anime-item.html">
+
+<dom-module id="anime-view" >
+    <style>
+        .flexgrid {
+            
+            @apply(--layout-flex-auto)
+        }
+    </style>
+    <template>
+        <div id="gridContainer" name="mainGrid" class="flexgrid">
+            <template is="dom-repeat" id="gridList" items="{{gridItems}}">
+                <anime-item anime="{{item}}"></anime-item>
+            </template>
+        </div>
+    </template>
+</dom-module>
+<script>
+    Polymer({
+        is: "anime-view",
+        properties: {
+            gridItems: {
+                type: 'array',
+                notify: 'true',
+                value: [],
+            }
+        },
+    });
+</script>
