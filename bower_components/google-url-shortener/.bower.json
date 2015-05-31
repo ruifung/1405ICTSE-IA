@@ -35,7 +35,6 @@
     "commit": "5220e6330b9e5d8eabd6219c412ddd7fb5f70a87"
   },
   "_source": "git://github.com/GoogleWebComponents/google-url-shortener.git",
-  "_target": "1.0.0",
-  "_originalSource": "GoogleWebComponents/google-url-shortener",
-  "_direct": true
+  "_target": "~1.0.0",
+  "_originalSource": "GoogleWebComponents/google-url-shortener"
 }

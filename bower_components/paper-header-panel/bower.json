@@ -1,6 +1,6 @@
 {
   "name": "paper-header-panel",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A header and content wrapper for layout with headers",
   "authors": [
     "The Polymer Authors"
@@ -10,7 +10,6 @@
     "polymer",
     "layout"
   ],
-  "main": "index.html",
   "private": true,
   "license": "http://polymer.github.io/LICENSE.txt",
   "homepage": "https://github.com/PolymerElements/paper-header-panel",

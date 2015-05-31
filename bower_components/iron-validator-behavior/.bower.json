@@ -1,11 +1,10 @@
 {
   "name": "iron-validator-behavior",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Implements a input validator",
   "authors": "The Polymer Authors",
   "keywords": [
     "web-components",
-    "web-component",
     "polymer",
     "iron",
     "behavior"
@@ -32,14 +31,13 @@
     "web-component-tester": "*",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
-  "_release": "1.0.0",
+  "_release": "1.0.1",
   "_resolution": {
     "type": "version",
-    "tag": "v1.0.0",
-    "commit": "3b875648c3e3c4191b443e71f7482ca91fa6f08f"
+    "tag": "v1.0.1",
+    "commit": "fd9c609472c0c0b64657488d1d33dfc2365dea44"
   },
   "_source": "git://github.com/PolymerElements/iron-validator-behavior.git",
-  "_target": "1.0.0",
-  "_originalSource": "PolymerElements/iron-validator-behavior",
-  "_direct": true
+  "_target": "~1.0.0",
+  "_originalSource": "PolymerElements/iron-validator-behavior"
 }

@@ -41,7 +41,6 @@
     "commit": "ae96e84193694882ff4112566bf365e495b6263f"
   },
   "_source": "git://github.com/PolymerElements/iron-autogrow-textarea.git",
-  "_target": "1.0.0",
-  "_originalSource": "PolymerElements/iron-autogrow-textarea",
-  "_direct": true
+  "_target": "~1.0.0",
+  "_originalSource": "PolymerElements/iron-autogrow-textarea"
 }

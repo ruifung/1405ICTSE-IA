@@ -36,7 +36,6 @@
     "commit": "0642450ec9df0fc0b1d909842f436c3dea79ed1e"
   },
   "_source": "git://github.com/PolymerElements/paper-menu.git",
-  "_target": "1.0.0",
-  "_originalSource": "PolymerElements/paper-menu",
-  "_direct": true
+  "_target": "~1.0.0",
+  "_originalSource": "PolymerElements/paper-menu"
 }

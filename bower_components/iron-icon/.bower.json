@@ -34,7 +34,6 @@
     "commit": "b6c36359baf7dff86cc4174012296555512ce0c1"
   },
   "_source": "git://github.com/PolymerElements/iron-icon.git",
-  "_target": "1.0.0",
-  "_originalSource": "PolymerElements/iron-icon",
-  "_direct": true
+  "_target": "~1.0.0",
+  "_originalSource": "PolymerElements/iron-icon"
 }

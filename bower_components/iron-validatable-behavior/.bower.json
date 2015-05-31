@@ -1,11 +1,10 @@
 {
   "name": "iron-validatable-behavior",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Provides a behavior for an element that validates user input",
   "authors": "The Polymer Authors",
   "keywords": [
     "web-components",
-    "web-component",
     "polymer",
     "iron",
     "behavior"
@@ -32,14 +31,13 @@
     "web-component-tester": "*",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
-  "_release": "1.0.0",
+  "_release": "1.0.1",
   "_resolution": {
     "type": "version",
-    "tag": "v1.0.0",
-    "commit": "e1e7161d01fdcff5ba538c5a35889580dc66fb91"
+    "tag": "v1.0.1",
+    "commit": "63513294174960e48dfb4617f55e716de3c9fc49"
   },
   "_source": "git://github.com/PolymerElements/iron-validatable-behavior.git",
-  "_target": "1.0.0",
-  "_originalSource": "PolymerElements/iron-validatable-behavior",
-  "_direct": true
+  "_target": "~1.0.0",
+  "_originalSource": "PolymerElements/iron-validatable-behavior"
 }

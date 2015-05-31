@@ -1,6 +1,6 @@
 {
   "name": "iron-selector",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Manages a set of elements that can be selected",
   "private": true,
   "license": "http://polymer.github.io/LICENSE.txt",
@@ -13,7 +13,7 @@
   "keywords": [
     "web-components",
     "polymer",
-    "iron"
+    "selector"
   ],
   "repository": {
     "type": "git",

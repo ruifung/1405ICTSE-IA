@@ -33,7 +33,6 @@
     "commit": "71e6c327f7aafe9c71010c83d4c4571f63990072"
   },
   "_source": "git://github.com/PolymerElements/paper-toast.git",
-  "_target": "1.0.0",
-  "_originalSource": "PolymerElements/paper-toast",
-  "_direct": true
+  "_target": "~1.0.0",
+  "_originalSource": "PolymerElements/paper-toast"
 }

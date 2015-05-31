@@ -30,7 +30,6 @@
     "commit": "b2a3ef4c558b91a3f9a897f2d0b4c961a220a325"
   },
   "_source": "git://github.com/PolymerElements/iron-image.git",
-  "_target": "1.0.0",
-  "_originalSource": "PolymerElements/iron-image",
-  "_direct": true
+  "_target": "~1.0.0",
+  "_originalSource": "PolymerElements/iron-image"
 }
