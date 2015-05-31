@@ -160,7 +160,6 @@ function aniListAPI() {
         }
         
         var xhr = new XMLHttpRequest();
-        xhr.timeout = this.timeout;
         //Callback to process state changes.
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200 && typeof callback === 'function') {
@@ -184,11 +183,13 @@ function aniListAPI() {
             switch (method) {
                     case "GET":
                         xhr.open(method.toUpperCase(), this.apiPrefix + urlSuffix + '?' + this.generateRequestString(requestData) , true);
+                        xhr.timeout = this.timeout;
                         xhr.setRequestHeader("Authorization", this.authToken.access_token);
                         xhr.send();
                         break;
                     case "POST":
                         xhr.open(method.toUpperCase(), this.apiPrefix + this.apiPath, true);
+                        xhr.timeout = this.timeout;
                         xhr.setRequestHeader("Authorization", this.authToken.access_token);
                         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                         xhr.send(this.generateRequestString(requestData));
