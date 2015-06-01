@@ -53,11 +53,10 @@
     </style>
     <template>
         <paper-menu id="genreMenu" attr-for-selected="genreId" selected-values="{{selectedGenres}}" multi>
-            <paper-material id="helpInfo">Please select which genres to show, if none are selected all genres are shown.</paper-material>
             <template is="dom-repeat" id="genreRepeat" items="{{genres}}">         
                 <paper-item genre-id="[[item.id]]" class="genreItem">
                     <span>[[item.genre]]</span>
-                    <iron-icon icon="check-circle"></iron-icon>
+                    <iron-icon icon="check-circle"></iron-icon>                    
                 </paper-item>
             </template>
         </paper-menu>
@@ -72,7 +71,7 @@
         ],
         properties: {
             genres: {
-                type: 'array',
+                type: Array,
                 readOnly: true,
                 value: function() {
                     return [];
@@ -80,7 +79,7 @@
                 notify: true
             },
             selectedGenres: {
-                type: "array",
+                type: Array,
                 notify: true,
                 value: function() {
                     return [];

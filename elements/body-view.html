@@ -19,6 +19,9 @@
 <link rel="import" href="genre-list.html">
 <link rel="import" href="anime-view.html">
 
+<!--TEMPORARY-->
+<link rel="import" href="anime-item.html">
+
 <dom-module id="body-view">
     <style>
         #navBar {
@@ -57,10 +60,16 @@
         .hidden {
             display: none;
         }
+        
+        #animeItemTest {
+            padding: 20px;
+            width: 180px;
+            height: 254px;
+        }
     </style>
     
     <template>
-        <paper-drawer-panel id="drawerPanel" selected="{{drawerPanelView}}">
+        <paper-drawer-panel id="drawerPanel" selected="{{drawerPanelView}}" peeking="true">
             
             <!-- THE DRAWER -->
             <paper-material drawer elevation="2">
@@ -68,7 +77,7 @@
                     <paper-toolbar id="navBar">
                         <paper-button disabled>IA1405</paper-button>
                         <paper-icon-button icon="arrow-back" id="backBtn"></paper-icon-button>
-                        <paper-icon-button icon="aspect-ratio" id="hideSidebarBtn"></paper-icon-button>
+                        <paper-icon-button icon="search" id="searchBtn"></paper-icon-button>
                     </paper-toolbar>
                     <iron-pages id="sidebarPages" selected="{{sidebarSelected}}" attr-for-selected="id" style="overflow-y:auto;overflow-x:hidden;">
                         <div id="options">
@@ -83,7 +92,10 @@
             </paper-material>
             
             <!-- MAIN VIEW -->
-            <iron-pages main id="mainSelector" attr-for-selected="id" selected="animeView">
+            <iron-pages main id="mainSelector" attr-for-selected="id" selected="test">
+                <div id="test">
+                    <anime-item id="animeItemTest" anime-name="Test" anime-image="http://anilist.co/img/dir/anime/reg/21208-RFzZVj5EcbPZ.jpg">OMG IM SO EPIC LALALALALALALAL LALALALALALALAL LALALALALALALAL LALALALALALALAL LALALALALALALAL</anime-item>
+                </div>
                 Placeholder Text
                 <anime-view id="animeView"></anime-view>
             </iron-pages>
@@ -102,7 +114,7 @@
                 observer: "_drawerViewObserver"
             },
             selectedGenres: {
-                type: "array",
+                type: Array,
                 notify: true,
                 observer: "_genresObserver"
             },
