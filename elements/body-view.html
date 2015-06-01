@@ -62,9 +62,7 @@
         }
         
         #animeItemTest {
-            padding: 20px;
-            width: 180px;
-            height: 254px;
+            
         }
     </style>
     
@@ -92,11 +90,7 @@
             </paper-material>
             
             <!-- MAIN VIEW -->
-            <iron-pages main id="mainSelector" attr-for-selected="id" selected="test">
-                <div id="test">
-                    <anime-item id="animeItemTest" anime-name="Test" anime-image="http://anilist.co/img/dir/anime/reg/21208-RFzZVj5EcbPZ.jpg">OMG IM SO EPIC LALALALALALALAL LALALALALALALAL LALALALALALALAL LALALALALALALAL LALALALALALALAL</anime-item>
-                </div>
-                Placeholder Text
+            <iron-pages main id="mainSelector" attr-for-selected="id" selected="animeView">
                 <anime-view id="animeView"></anime-view>
             </iron-pages>
         </paper-drawer-panel>

@@ -7,15 +7,43 @@
 <dom-module id="anime-view" >
     <style>
         .flexgrid {
-            
+            display: flex;
+            height: 100%;
+            overflow-y: auto;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
             @apply(--layout-flex-auto)
+        }
+        .animeItem {
+            padding: 10px;
+            width: 180px;
+            height: 254px;
         }
     </style>
     <template>
         <div id="gridContainer" name="mainGrid" class="flexgrid">
-            <template is="dom-repeat" id="gridList" items="{{gridItems}}">
-                <anime-item anime="{{item}}"></anime-item>
-            </template>
+            <anime-item class="animeItem" anime-name="Mahou Shoujo Lyrical Nanoha StrikerS" anime-image="http://anilist.co/img/dir/anime/reg/21208-RFzZVj5EcbPZ.jpg">OMG IM SO EPIC LAL ALA LALALAL AL LALALA LALA LALAL LAL ALAL ALAL ALAL LA LALA LAL ALALAL  LALA LALALA LALAL</anime-item>
+            <anime-item class="animeItem" anime-name="Mahou Shoujo Lyrical Nanoha StrikerS" anime-image="http://anilist.co/img/dir/anime/reg/21208-RFzZVj5EcbPZ.jpg">OMG IM SO EPIC LAL ALA LALALAL AL LALALA LALA LALAL LAL ALAL ALAL ALAL LA LALA LAL ALALAL  LALA LALALA LALAL</anime-item>
+            <anime-item class="animeItem" anime-name="Mahou Shoujo Lyrical Nanoha StrikerS" anime-image="http://anilist.co/img/dir/anime/reg/21208-RFzZVj5EcbPZ.jpg">OMG IM SO EPIC LAL ALA LALALAL AL LALALA LALA LALAL LAL ALAL ALAL ALAL LA LALA LAL ALALAL  LALA LALALA LALAL</anime-item>
+            <anime-item class="animeItem" anime-name="Mahou Shoujo Lyrical Nanoha StrikerS" anime-image="http://anilist.co/img/dir/anime/reg/21208-RFzZVj5EcbPZ.jpg">OMG IM SO EPIC LAL ALA LALALAL AL LALALA LALA LALAL LAL ALAL ALAL ALAL LA LALA LAL ALALAL  LALA LALALA LALAL</anime-item>
+            <anime-item class="animeItem" anime-name="Mahou Shoujo Lyrical Nanoha StrikerS" anime-image="http://anilist.co/img/dir/anime/reg/21208-RFzZVj5EcbPZ.jpg">OMG IM SO EPIC LAL ALA LALALAL AL LALALA LALA LALAL LAL ALAL ALAL ALAL LA LALA LAL ALALAL  LALA LALALA LALAL</anime-item>
+            <anime-item class="animeItem" anime-name="Mahou Shoujo Lyrical Nanoha StrikerS" anime-image="http://anilist.co/img/dir/anime/reg/21208-RFzZVj5EcbPZ.jpg">OMG IM SO EPIC LAL ALA LALALAL AL LALALA LALA LALAL LAL ALAL ALAL ALAL LA LALA LAL ALALAL  LALA LALALA LALAL</anime-item>
+            <anime-item class="animeItem" anime-name="Mahou Shoujo Lyrical Nanoha StrikerS" anime-image="http://anilist.co/img/dir/anime/reg/21208-RFzZVj5EcbPZ.jpg">OMG IM SO EPIC LAL ALA LALALAL AL LALALA LALA LALAL LAL ALAL ALAL ALAL LA LALA LAL ALALAL  LALA LALALA LALAL</anime-item>
+            <anime-item class="animeItem" anime-name="Mahou Shoujo Lyrical Nanoha StrikerS" anime-image="http://anilist.co/img/dir/anime/reg/21208-RFzZVj5EcbPZ.jpg">OMG IM SO EPIC LAL ALA LALALAL AL LALALA LALA LALAL LAL ALAL ALAL ALAL LA LALA LAL ALALAL  LALA LALALA LALAL</anime-item>
+            <anime-item class="animeItem" anime-name="Mahou Shoujo Lyrical Nanoha StrikerS" anime-image="http://anilist.co/img/dir/anime/reg/21208-RFzZVj5EcbPZ.jpg">OMG IM SO EPIC LAL ALA LALALAL AL LALALA LALA LALAL LAL ALAL ALAL ALAL LA LALA LAL ALALAL  LALA LALALA LALAL</anime-item>
+            <anime-item class="animeItem" anime-name="Mahou Shoujo Lyrical Nanoha StrikerS" anime-image="http://anilist.co/img/dir/anime/reg/21208-RFzZVj5EcbPZ.jpg">OMG IM SO EPIC LAL ALA LALALAL AL LALALA LALA LALAL LAL ALAL ALAL ALAL LA LALA LAL ALALAL  LALA LALALA LALAL</anime-item>
+            <anime-item class="animeItem" anime-name="Mahou Shoujo Lyrical Nanoha StrikerS" anime-image="http://anilist.co/img/dir/anime/reg/21208-RFzZVj5EcbPZ.jpg">OMG IM SO EPIC LAL ALA LALALAL AL LALALA LALA LALAL LAL ALAL ALAL ALAL LA LALA LAL ALALAL  LALA LALALA LALAL</anime-item>
+            <anime-item class="animeItem" anime-name="Mahou Shoujo Lyrical Nanoha StrikerS" anime-image="http://anilist.co/img/dir/anime/reg/21208-RFzZVj5EcbPZ.jpg">OMG IM SO EPIC LAL ALA LALALAL AL LALALA LALA LALAL LAL ALAL ALAL ALAL LA LALA LAL ALALAL  LALA LALALA LALAL</anime-item>
+            <anime-item class="animeItem" anime-name="Mahou Shoujo Lyrical Nanoha StrikerS" anime-image="http://anilist.co/img/dir/anime/reg/21208-RFzZVj5EcbPZ.jpg">OMG IM SO EPIC LAL ALA LALALAL AL LALALA LALA LALAL LAL ALAL ALAL ALAL LA LALA LAL ALALAL  LALA LALALA LALAL</anime-item>
+            <anime-item class="animeItem" anime-name="Mahou Shoujo Lyrical Nanoha StrikerS" anime-image="http://anilist.co/img/dir/anime/reg/21208-RFzZVj5EcbPZ.jpg">OMG IM SO EPIC LAL ALA LALALAL AL LALALA LALA LALAL LAL ALAL ALAL ALAL LA LALA LAL ALALAL  LALA LALALA LALAL</anime-item>
+            <anime-item class="animeItem" anime-name="Mahou Shoujo Lyrical Nanoha StrikerS" anime-image="http://anilist.co/img/dir/anime/reg/21208-RFzZVj5EcbPZ.jpg">OMG IM SO EPIC LAL ALA LALALAL AL LALALA LALA LALAL LAL ALAL ALAL ALAL LA LALA LAL ALALAL  LALA LALALA LALAL</anime-item>
+            <anime-item class="animeItem" anime-name="Mahou Shoujo Lyrical Nanoha StrikerS" anime-image="http://anilist.co/img/dir/anime/reg/21208-RFzZVj5EcbPZ.jpg">OMG IM SO EPIC LAL ALA LALALAL AL LALALA LALA LALAL LAL ALAL ALAL ALAL LA LALA LAL ALALAL  LALA LALALA LALAL</anime-item>
+            <anime-item class="animeItem" anime-name="Mahou Shoujo Lyrical Nanoha StrikerS" anime-image="http://anilist.co/img/dir/anime/reg/21208-RFzZVj5EcbPZ.jpg">OMG IM SO EPIC LAL ALA LALALAL AL LALALA LALA LALAL LAL ALAL ALAL ALAL LA LALA LAL ALALAL  LALA LALALA LALAL</anime-item>
+            <anime-item class="animeItem" anime-name="Mahou Shoujo Lyrical Nanoha StrikerS" anime-image="http://anilist.co/img/dir/anime/reg/21208-RFzZVj5EcbPZ.jpg">OMG IM SO EPIC LAL ALA LALALAL AL LALALA LALA LALAL LAL ALAL ALAL ALAL LA LALA LAL ALALAL  LALA LALALA LALAL</anime-item>
+            <anime-item class="animeItem" anime-name="Mahou Shoujo Lyrical Nanoha StrikerS" anime-image="http://anilist.co/img/dir/anime/reg/21208-RFzZVj5EcbPZ.jpg">OMG IM SO EPIC LAL ALA LALALAL AL LALALA LALA LALAL LAL ALAL ALAL ALAL LA LALA LAL ALALAL  LALA LALALA LALAL</anime-item>
+            <anime-item class="animeItem" anime-name="Mahou Shoujo Lyrical Nanoha StrikerS" anime-image="http://anilist.co/img/dir/anime/reg/21208-RFzZVj5EcbPZ.jpg">OMG IM SO EPIC LAL ALA LALALAL AL LALALA LALA LALAL LAL ALAL ALAL ALAL LA LALA LAL ALALAL  LALA LALALA LALAL</anime-item>
+            <anime-item class="animeItem" anime-name="Mahou Shoujo Lyrical Nanoha StrikerS" anime-image="http://anilist.co/img/dir/anime/reg/21208-RFzZVj5EcbPZ.jpg">OMG IM SO EPIC LAL ALA LALALAL AL LALALA LALA LALAL LAL ALAL ALAL ALAL LA LALA LAL ALALAL  LALA LALALA LALAL</anime-item>
         </div>
     </template>
 </dom-module>
