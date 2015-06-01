@@ -71,7 +71,8 @@
     "observe-js": "Polymer/observe-js#~0.5.6",
     "custom-event-polyfill": "krambuhl/custom-event-polyfill#~0.2.1",
     "app-router": "~2.6.1",
-    "page.js": "~1.6.3"
+    "page.js": "~1.6.3",
+    "prefixfree": "*"
   },
   "install": {
     "path": "components"

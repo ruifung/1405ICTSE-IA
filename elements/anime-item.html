@@ -83,12 +83,22 @@
             opacity: 1;
         }
         #itemContainer:hover > #itemDetails #itemDetailsTitle span {
+            -webkit-animation: marquee 15s linear infinite;
+            -moz-animation: marquee 15s linear infinite;
             animation: marquee 15s linear infinite;
         }
         #itemContainer:hover > #itemDetails #itemDetailsSub span {
             bottom: 0;
         }
         @keyframes marquee {
+            0%   { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+        @-moz-keyframes marquee {
+            0%   { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+        @-webkit-keyframes marquee {
             0%   { transform: translate(0, 0); }
             100% { transform: translate(-100%, 0); }
         }
