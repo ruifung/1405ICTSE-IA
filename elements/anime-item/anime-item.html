@@ -1,0 +1,44 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+
+<dom-module id="anime-item">
+    <link rel="import" type="css" href="anime-item.css">
+    <template>
+        <paper-material id="itemContainer" elevation="4">
+            <div id="itemTitle">[[animeName]]</div>
+            <div id="itemDetails">
+                <div id="itemDetailsTitle">
+                    <span>[[animeName]]</span>
+                </div>
+                <div id="itemDetailsSub">
+                    <content></content>
+                </div>
+            </div>
+        </paper-material>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: 'anime-item',
+        properties: {
+            "animeName": {
+                type: String
+            },
+            "animeImage": {
+                type: String
+            },
+            "animeId": {
+                type: Number,
+                reflectToAttribute: true
+            },
+        },
+        ready: function() {
+            this.updateBackgroundImg(this.animeImage);
+        },
+        updateBackgroundImg: function(url) {
+            this.$.itemContainer.style.background = "url("+url+")";
+        },
+    });
+</script>

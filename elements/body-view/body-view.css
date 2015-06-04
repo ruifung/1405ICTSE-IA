@@ -1,0 +1,36 @@
+#navBar {
+    top: 0px;
+    left: 0px;
+    height: 50px;
+    width: 100%
+}
+
+#navBar #busySpinner {
+    position: absolute;
+    margin: 10px;
+    right: 0px;
+}
+
+#navBar::shadow .paper-toolbar {
+    height: 50px;
+    margin: 0px;
+    padding: 0px;
+}
+
+#drawerPanel {
+    top:0px;
+    height: 100%;
+}
+
+#default .submenu {
+    position: relative;
+    width: calc(100% - 20px);
+    left: 20px;
+    margin: 0px; 
+    padding: 0px;
+    color:aqua;
+}
+
+.hidden {
+    display: none;
+}

@@ -1,0 +1,62 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+
+<link rel="import" href="../../bower_components/paper-header-panel/paper-header-panel.html">
+<link rel="import" href="../../bower_components/paper-drawer-panel/paper-drawer-panel.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
+
+<link rel="import" href="../../bower_components/observe-js/observe-js.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+
+<link rel="import" href="../genre-list.html">
+<link rel="import" href="../anime-view.html">
+
+<dom-module id="body-view">
+    <link rel="import" type="css" href="body-view.css">
+    <template>
+        <paper-drawer-panel id="drawerPanel" selected="{{drawerPanelView}}" peeking="true">
+            
+            <!-- THE DRAWER -->
+            <paper-material drawer elevation="2">
+                <paper-header-panel>
+                    <!--Sidebar Toolbar-->
+                    <paper-toolbar id="navBar">
+                        <paper-button disabled>IA1405</paper-button>
+                        <paper-icon-button icon="arrow-back" id="backBtn"></paper-icon-button>
+                        <paper-icon-button icon="search" id="searchBtn"></paper-icon-button>
+                    </paper-toolbar>
+                    
+                    <!--Sidebar View Selector-->
+                    <iron-pages id="sidebarPages" selected="{{sidebarSelected}}" attr-for-selected="id" 
+                                style="overflow-y:auto;overflow-x:hidden;">
+                        <!-- Options View -->
+                        <div id="options">
+                            <paper-item>Filter Options</paper-item>
+                            <paper-button raised id="genreButton">Genre</paper-button>
+                            <paper-button raised id="seasonsButton">Season</paper-button>
+                        </div>
+                        <!-- Genre list selector -->
+                        <genre-list id="genres" selected-genres="{{selectedGenres}}" filter-adult="[[filterAdult]]"></genre-list>
+                        <!-- Season selector -->
+                        <div id="seasons">Seasons Selector Placeholder</div>
+                    </iron-pages>
+                </paper-header-panel>
+            </paper-material>
+            
+            <!-- MAIN VIEW -->
+            <iron-pages main id="mainSelector" attr-for-selected="id" selected="animeView">
+                <anime-view id="animeView" animes="[[_animes]]"></anime-view>
+            </iron-pages>
+        </paper-drawer-panel>
+        
+    </template>
+</dom-module>
+<script type="text/javascript" src="body-view.js"></script>
