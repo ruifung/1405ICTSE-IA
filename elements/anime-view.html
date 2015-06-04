@@ -20,7 +20,7 @@
         }
         .animeItem {
             cursor: pointer;
-            padding: 20px;
+            margin: 20px;
             width: 180px;
             height: 254px;
         }
@@ -47,5 +47,12 @@
                 value: [],
             }
         },
+        listeners: {
+            "anime-item-click": "onAnimeClick"
+        },
+        
+        onAnimeClick: function(e) {
+            console.log(e);
+        }
     });
 </script>

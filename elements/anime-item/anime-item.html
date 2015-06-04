@@ -1,13 +1,15 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
 <link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
 
 <dom-module id="anime-item">
     <link rel="import" type="css" href="anime-item.css">
     <template>
         <paper-material id="itemContainer" elevation="4">
-            <div id="itemTitle">[[animeName]]</div>
-            <div id="itemDetails">
+            <paper-fab id="fab"></paper-fab>
+            <div id="itemTitle" class="textshadows">[[animeName]]</div>
+            <div id="itemDetails" class="nopointer textshadows">
                 <div id="itemDetailsTitle">
                     <span>[[animeName]]</span>
                 </div>
@@ -22,6 +24,7 @@
 <script>
     Polymer({
         is: 'anime-item',
+        touched: 0,
         properties: {
             "animeName": {
                 type: String
@@ -33,9 +36,89 @@
                 type: Number,
                 reflectToAttribute: true
             },
+            "detailsView": {
+                type: Boolean,
+                value: false,
+                notify: true,
+                observer: "updateDetailsView"
+            }
+        },
+        listeners: {
+            mouseover: "_mouseEvent",
+            mousemove: "_mouseEvent",
+            mouseout: "_mouseEvent",
+            touchstart: "_touchEvent",
+            touchend: "_touchEvent",
+            click: "_click"
         },
         ready: function() {
             this.updateBackgroundImg(this.animeImage);
+            this._fabEvent();
+        },
+        
+        _fabEvent: function() {
+            this.$.fab.onclick = function(e) {
+                e.stopPropagation();
+                this.fire("anime-item-click",{id:this.animeId});
+            }.bind(this);
+        },
+        _mouseEvent: function(e) {
+            if (this.touched !== 0) {
+                return;
+            }
+            if (e.type === "mouseover") {
+                this.detailsView = true;
+            } else if (e.type === "mouseout") {
+                this.detailsView = false;
+            }
+            if (this.detailsView) {
+                this.toggleClass("showDetails",false,this.$.fab);
+            }
+        },
+        
+        _touchEvent: function(e) {
+            switch(e.type) {
+                case "touchstart":
+                    if (this.detailsView) {
+                        this.toggleClass("showDetails",true,this.$.fab);
+                    }
+                    this.touched = (new Date()).getTime();
+                    break;
+                case "touchend":
+                    function cleartouched() {
+                        var timeDiff = (new Date()).getTime() - this.touched;
+                        if(timeDiff < 350) {
+                            return;
+                        }
+                        this.touched = 0;
+                    }
+                    setTimeout(cleartouched.bind(this),350)
+                    break;
+            }
+        },
+        
+        _click: function(e) {
+            //Handle touch click!
+            if (this.touched !== 0) {
+                this.touched = 0;
+                if(this.detailsView) {
+                    this.toggleClass("showDetails",false,this.$.fab);
+                    this.detailsView = false;
+                } else {
+                    this.toggleClass("showDetails",true,this.$.fab);
+                    this.detailsView = true;
+                }
+                return;
+            }
+            //Not touch click!
+            this.fire("anime-item-click",{id:this.animeId});
+        },
+        
+        updateDetailsView: function(newV,oldV) {
+            this.toggleClass("showDetails",newV,this.$.itemContainer);
+            if(newV === false) {
+                this.toggleClass("showDetails",false,this.$.fab);
+            }
         },
         updateBackgroundImg: function(url) {
             this.$.itemContainer.style.background = "url("+url+")";

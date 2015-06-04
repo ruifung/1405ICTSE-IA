@@ -7,6 +7,8 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
+    -webkit-transform: translatez(0);
+    transform: translateZ(0);
 }
 #itemTitle {
     height: auto;
@@ -38,10 +40,7 @@
     background: linear-gradient(rgba(244,244,244,0),
                                 rgba(244,244,244,0.4) 20px,
                                 rgba(244,244,244,0.8));
-    text-shadow: 0px 0px 10px rgba(255,255,255,0.6),
-                 0px 0px 30px rgba(255,255,255,0.4),
-                 0px 0px 50px rgba(255,255,255,0.3),
-                 0px 0px 180px rgba(255,255,255,0.3);
+
     transition: transform 0.5s ease-out;
 }
 #itemDetailsTitle {
@@ -70,32 +69,70 @@
     overflow: hidden;
     @apply(--paper-font-body1)
 }
-#itemContainer:hover > #itemTitle {
-    transform: translateY(-100%);
+
+#fab {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    margin: -20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in;
 }
-#itemContainer:hover > #itemDetails {
-    transform: translateY(calc(-100% + 30px));
+
+#fab.showDetails {
+    opacity: 0.8;
+    pointer-events: auto;
 }
-#itemContainer:hover > #itemDetails #itemDetailsTitle {
+
+#itemContainer.showDetails > #itemTitle {
+    transform: translate3d(0, -100%, 0);
+;
+}
+#itemContainer.showDetails > #itemDetails {
+    transform: translate3d(0, calc(-100% + 30px), 0);
+}
+#itemContainer.showDetails > #itemDetails #itemDetailsTitle {
     opacity: 1;
 }
-#itemContainer:hover > #itemDetails #itemDetailsTitle span {
+#itemContainer.showDetails > #itemDetails #itemDetailsTitle span {
     -webkit-animation: marquee 15s linear infinite;
     -moz-animation: marquee 15s linear infinite;
     animation: marquee 15s linear infinite;
 }
-#itemContainer:hover > #itemDetails #itemDetailsSub span {
-    bottom: 0;
+
+.nopointer {
+    pointer-events: none;
 }
-@keyframes marquee {
-    0%   { transform: translate(0, 0); }
-    100% { transform: translate(-100%, 0); }
+
+.textshadows {
+    text-shadow: 0px 0px 10px rgba(255,255,255,0.6),
+                 0px 0px 30px rgba(255,255,255,0.4),
+                 0px 0px 50px rgba(255,255,255,0.3),
+                 0px 0px 180px rgba(255,255,255,0.3);
 }
+
 @-moz-keyframes marquee {
-    0%   { transform: translate(0, 0); }
-    100% { transform: translate(-100%, 0); }
+    0%   {
+        transform: translate3d(0,0,0);
+    }
+    100% {
+        transform: translate3d(-100%,0,0);
+    }
 }
 @-webkit-keyframes marquee {
-    0%   { transform: translate(0, 0); }
-    100% { transform: translate(-100%, 0); }
+    0%   {
+        transform: translate3d(0,0,0);
+    }
+    100% {
+        transform: translate3d(-100%,0,0);
+    }
+}
+@keyframes marquee {
+    0%   {
+        transform: translate3d(0,0,0);
+    }
+    100% {
+        transform: translate3d(-100%,0,0);
+    }
 }
