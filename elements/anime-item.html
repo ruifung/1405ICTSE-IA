@@ -17,6 +17,9 @@
         #itemTitle {
             height: auto;
             width: 100%;
+            -moz-backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+   	        backface-visibility: hidden;
             background: rgba(244,244,244,0.3);
             text-shadow: 0px 0px 10px rgba(255,255,255,0.6),
                          0px 0px 30px rgba(255,255,255,0.4),
@@ -25,7 +28,7 @@
             text-align: center;
             font-size: 18px !important;
             font-weight: 600 !important;
-            transition: opacity 0.5s linear;
+            transition: transform 0.3s linear;
             color: black;
             @apply(--paper-font-subhead)
         }
@@ -74,7 +77,7 @@
             @apply(--paper-font-body1)
         }
         #itemContainer:hover > #itemTitle {
-            opacity: 0;
+            transform: translateY(-100%);
         }
         #itemContainer:hover > #itemDetails {
             transform: translateY(calc(-100% + 30px));
@@ -111,9 +114,7 @@
                     <span>[[animeName]]</span>
                 </div>
                 <div id="itemDetailsSub">
-                    <span>
-                        <content></content>
-                    </span>
+                    <content></content>
                 </div>
             </div>
         </paper-material>
@@ -133,7 +134,7 @@
             "animeId": {
                 type: Number,
                 reflectToAttribute: true
-            }
+            },
         },
         ready: function() {
             this.updateBackgroundImg(this.animeImage);

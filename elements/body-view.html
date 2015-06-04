@@ -72,18 +72,25 @@
             <!-- THE DRAWER -->
             <paper-material drawer elevation="2">
                 <paper-header-panel>
+                    <!--Sidebar Toolbar-->
                     <paper-toolbar id="navBar">
                         <paper-button disabled>IA1405</paper-button>
                         <paper-icon-button icon="arrow-back" id="backBtn"></paper-icon-button>
                         <paper-icon-button icon="search" id="searchBtn"></paper-icon-button>
                     </paper-toolbar>
-                    <iron-pages id="sidebarPages" selected="{{sidebarSelected}}" attr-for-selected="id" style="overflow-y:auto;overflow-x:hidden;">
+                    
+                    <!--Sidebar View Selector-->
+                    <iron-pages id="sidebarPages" selected="{{sidebarSelected}}" attr-for-selected="id" 
+                                style="overflow-y:auto;overflow-x:hidden;">
+                        <!-- Options View -->
                         <div id="options">
                             <paper-item>Filter Options</paper-item>
                             <paper-button raised id="genreButton">Genre</paper-button>
                             <paper-button raised id="seasonsButton">Season</paper-button>
                         </div>
-                        <genre-list id="genres" selected-genres="{{selectedGenres}}"></genre-list>
+                        <!-- Genre list selector -->
+                        <genre-list id="genres" selected-genres="{{selectedGenres}}" filter-adult="[[filterAdult]]"></genre-list>
+                        <!-- Season selector -->
                         <div id="seasons">Seasons Selector Placeholder</div>
                     </iron-pages>
                 </paper-header-panel>
@@ -91,7 +98,7 @@
             
             <!-- MAIN VIEW -->
             <iron-pages main id="mainSelector" attr-for-selected="id" selected="animeView">
-                <anime-view id="animeView"></anime-view>
+                <anime-view id="animeView" animes="[[_animes]]"></anime-view>
             </iron-pages>
         </paper-drawer-panel>
         
@@ -115,14 +122,27 @@
             drawerPanelView: {
                 type: String,
                 observer: "_drawerStateObserver"
+            },
+            filterAdult: {
+                type: Boolean,
+                value: true,
+                notify: true
+            },
+            _animes: {
+                type: Array,
+                value: [],
+                notify: true
             }
         },
         
         ready: function() {
             this.sidebarSelected = "options";
-            this.registerButtonHandlers();
+            this._registerButtonHandlers();
+            this._updateAnimeView({status:"Currently Airing",full_page:true,year:2015});
         },
         
+        
+        //Observers
         _drawerViewObserver: function(newV, oldV) {
             if (newV === "options") {
                 this.toggleClass("hidden",true,this.$.backBtn);
@@ -143,7 +163,6 @@
             }
             
         },
-            
         _genresObserver: function(newV,oldV) {
             if (typeof oldV !== 'undefined') {
                 oldV.observer.close();
@@ -154,22 +173,52 @@
             newV.observer.open(onSelectionChanged);
         },
         
-        registerButtonHandlers: function() {
+        //Event Handling
+        _registerButtonHandlers: function() {
             this.$.backBtn.onclick = function() {
-                this.onSidebarButtonClick("options")
+                this._onSidebarButtonClick("options")
             }.bind(this);
             this.$.genreButton.onclick = function() {
-                this.onSidebarButtonClick("genres");
+                this._onSidebarButtonClick("genres");
             }.bind(this);
             this.$.seasonsButton.onclick = function() {
-                this.onSidebarButtonClick("seasons");
+                this._onSidebarButtonClick("seasons");
             }.bind(this);
         },
         
-        onSidebarButtonClick: function(button) {
+        _onSidebarButtonClick: function(button) {
             setTimeout(function() {
                 this.sidebarSelected = button;
             }.bind(this),0);
+        },
+        
+        //Main View data
+        _filter: function(data) {
+            if(!this.filterAdult) {
+                return true;
+            }
+            return !data.adult;
+        },
+        
+        _updateAnimeView: function(options) {
+            alAPI.anime.browse(options,function(status, data) {
+                if (status) {
+                    this._getFullAnimeData(data);
+                }
+            }.bind(this));
+        },
+        _getFullAnimeData: function(data) {
+            var animeID;
+            while (data.length > 0) {
+                animeID = data.shift().id;
+                alAPI.anime.get("", animeID, function(status, data) {
+                    if (status) {
+                        if(this._filter(data)) {
+                            this.push("_animes",data);
+                        }
+                    }
+                }.bind(this));
+            }
         },
     });
 </script>

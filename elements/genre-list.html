@@ -84,6 +84,10 @@
                 value: function() {
                     return [];
                 },
+            },
+            filterAdult: {
+                type: Boolean,
+                value: false
             }
         },
         listeners: {
@@ -95,6 +99,22 @@
         updateList: function() {
             alAPI.getGenres(function (status, data) {
                 if (status) {
+                    if(this.filterAdult) {
+                        var newData = [];
+                        for (var i = 0; i < data.length; i++) {
+                            switch(data[i].genre) {
+                                case "Adult":
+                                case "Doujinshi":
+                                case "Hentai":
+                                    break;
+                                default:
+                                    newData.push(data[i]);
+                                    break;
+                            }
+                        }
+                        this._setGenres(newData);
+                        return;
+                    }
                     this._setGenres(data);
                 }
             }.bind(this))

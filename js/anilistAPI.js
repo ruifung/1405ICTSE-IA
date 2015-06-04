@@ -128,6 +128,7 @@ function aniListAPI() {
         If failed, second parameter is XMLHttpRequest object for additional information.
     */
     this.apiRequest = function (method, urlSuffix, requestData, callback) {
+        //console.log(arguments);
         // To simulate function overloading. =/
         try {
             if (!(method.toUpperCase() === "POST" || method.toUpperCase() === "GET")) {
@@ -169,7 +170,9 @@ function aniListAPI() {
                     this.apiRequest(method, urlSuffix, requestData, callback);
                 }
                 else {
-                    callback(false, "reqfailed", xhr);
+                    if(xhr.readyState === 4) {
+                        callback(false, "reqfailed", xhr);
+                    }
                 }
             }
         }.bind(this);
@@ -240,6 +243,9 @@ function aniListAPI() {
     this.init = function () {
         if (this.initialized) {
             return;
+        }
+        for (var func in this.anime) {
+            this.anime[func] = this.anime[func].bind(this);
         }
         var apiReady = function () {
             var event = new CustomEvent('AnilistAPIReady');
