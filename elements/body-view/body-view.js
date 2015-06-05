@@ -111,6 +111,9 @@ Polymer({
             alAPI.anime.get("", animeID, function(status, data) {
                 if (status) {
                     if(this._filter(data)) {
+                        if (data.description === null) {
+                            data.description = "No description available."
+                        }
                         this.push("_animes",data);
                     }
                 }

@@ -6,7 +6,7 @@
 <dom-module id="anime-item">
     <link rel="import" type="css" href="anime-item.css">
     <template>
-        <paper-material id="itemContainer" elevation="4">
+        <paper-material id="itemContainer" elevation="[[elevation]]">
             <paper-fab id="fab"></paper-fab>
             <div id="itemTitle" class="textshadows">[[animeName]]</div>
             <div id="itemDetails" class="nopointer textshadows">
@@ -25,6 +25,7 @@
     Polymer({
         is: 'anime-item',
         touched: 0,
+        elevation: 1,
         properties: {
             "animeName": {
                 type: String
@@ -116,8 +117,10 @@
         
         updateDetailsView: function(newV,oldV) {
             this.toggleClass("showDetails",newV,this.$.itemContainer);
+            this.elevation = newV ? 3 : 1;
             if(newV === false) {
                 this.toggleClass("showDetails",false,this.$.fab);
+                this.elevation = 1;
             }
         },
         updateBackgroundImg: function(url) {

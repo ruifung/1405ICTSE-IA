@@ -1,0 +1,68 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+
+<!-- WORK IN PROGRESS -->
+
+<dom-module id="anime-card">
+    <style>
+        :host {
+            display: block;
+            cursor: pointer;
+            margin: 20px;
+            width: 360px;
+            height: 254px;
+        }
+        #mainContainer {
+            position: relative;
+            height: 100%;
+            width: 100%;
+        }
+        #image {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            top: 0;
+            left:0 ;
+            background-color: blue;
+        }
+        #details {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            top: 0;
+            right:0 ;
+            background-color: red;
+        }
+    </style>
+    <template>
+        <paper-material id="mainContainer">
+            <div id=image></div>
+            <div id=details>
+                
+            </div>
+        </paper-material>
+    </template>
+</dom-module>
+<script>
+    Polymer({
+        is: "anime-card",
+        properties: {
+            "animeName": {
+                type: String
+            },
+            "animeImage": {
+                type: String
+            },
+            "animeId": {
+                type: Number,
+                reflectToAttribute: true
+            },
+         },
+        ready: function() {
+            this.updateBackgroundImg(this.animeImage);
+        },
+        updateBackgroundImg: function(url) {
+            this.$.image.style.background = "url("+url+")";
+        },
+    });
+</script>

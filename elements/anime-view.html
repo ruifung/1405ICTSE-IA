@@ -3,6 +3,7 @@
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="anime-item/anime-item.html">
+<link rel="import" href="anime-item/anime-card.html">
 
 <dom-module id="anime-view" >
     <style>
@@ -18,18 +19,11 @@
             justify-content: center;
             @apply(--layout-flex-auto)
         }
-        .animeItem {
-            cursor: pointer;
-            margin: 20px;
-            width: 180px;
-            height: 254px;
-        }
     </style>
     <template>
         <div id="gridContainer" name="mainGrid" class="flexgrid">
             <template is="dom-repeat" items="[[animes]]">
-                <anime-item class="animeItem" 
-                            anime-name="[[item.title_romaji]]" 
+                <anime-item anime-name="[[item.title_romaji]]" 
                             anime-image="[[item.image_url_lge]]" 
                             anime-id="[[item.id]]"
                             >[[item.description]]</anime-item>
@@ -50,6 +44,7 @@
         listeners: {
             "anime-item-click": "onAnimeClick"
         },
+        
         
         onAnimeClick: function(e) {
             console.log(e);

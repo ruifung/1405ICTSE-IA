@@ -1,5 +1,9 @@
 :host {
     display: block;
+    cursor: pointer;
+    margin: 20px;
+    width: 180px;
+    height: 254px;
 }
 
 #itemContainer {
@@ -9,6 +13,7 @@
     overflow: hidden;
     -webkit-transform: translatez(0);
     transform: translateZ(0);
+    transition: box-shadow 0.5s linear;
 }
 #itemTitle {
     height: auto;
