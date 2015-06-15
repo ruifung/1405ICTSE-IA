@@ -36,18 +36,10 @@
         is: "anime-view",
         properties: {
             animes: {
-                type: 'array',
+                type: Array,
                 notify: 'true',
                 value: [],
             }
         },
-        listeners: {
-            "anime-item-click": "onAnimeClick"
-        },
-        
-        
-        onAnimeClick: function(e) {
-            console.log(e);
-        }
     });
 </script>

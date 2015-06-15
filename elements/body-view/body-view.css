@@ -31,6 +31,22 @@
     color:aqua;
 }
 
+#options > div {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+#options > div > .optionsBtn {
+    width: 45%;
+    margin-bottom: 2px;
+    margin-bottom: 2vh;
+}
+
+#options > div > #feedbackBtn {
+    width: 95%;
+}
+
 .hidden {
     display: none;
 }

@@ -120,5 +120,16 @@ Polymer({
             }.bind(this));
         }
     },
+    
+    listeners: {
+        "anime-item-click": "onAnimeClick"
+    },
+
+
+    onAnimeClick: function(e) {
+        console.log(e);
+        this.$.details.open();
+    }
+    
 });
 /*jslint ignore: end*/

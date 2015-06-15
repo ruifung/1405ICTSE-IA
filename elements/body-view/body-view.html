@@ -5,6 +5,7 @@
 <link rel="import" href="../../bower_components/paper-drawer-panel/paper-drawer-panel.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
@@ -18,12 +19,13 @@
 
 <link rel="import" href="../genre-list.html">
 <link rel="import" href="../anime-view.html">
+<link rel="import" href="../anime-details.html">
 
 <dom-module id="body-view">
     <link rel="import" type="css" href="body-view.css">
     <template>
+        <anime-details id="details"></anime-details>
         <paper-drawer-panel id="drawerPanel" selected="{{drawerPanelView}}" peeking="true">
-            
             <!-- THE DRAWER -->
             <paper-material drawer elevation="2">
                 <paper-header-panel>
@@ -39,9 +41,14 @@
                                 style="overflow-y:auto;overflow-x:hidden;">
                         <!-- Options View -->
                         <div id="options">
-                            <paper-item>Filter Options</paper-item>
-                            <paper-button raised id="genreButton">Genre</paper-button>
-                            <paper-button raised id="seasonsButton">Season</paper-button>
+                            <paper-item><h2>Options</h2></paper-item>
+                            <div>
+                                <paper-button raised id="genreButton" class="optionsBtn">Filter by Genre</paper-button>
+                                <paper-button raised id="seasonsButton" class="optionsBtn">Filter by Season</paper-button>
+                                <paper-button raised id="sortButton" class="optionsBtn">Sorting Options</paper-button>
+                                <paper-button raised id="showFavBtn" class="optionsBtn">Show Favourites</paper-button>
+                                <paper-button raised id="feedbackBtn" class="optionsBtn">Leave Feedback</paper-button>
+                            </div>
                         </div>
                         <!-- Genre list selector -->
                         <genre-list id="genres" selected-genres="{{selectedGenres}}" filter-adult="[[filterAdult]]"></genre-list>

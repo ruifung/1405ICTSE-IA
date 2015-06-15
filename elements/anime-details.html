@@ -1,0 +1,63 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/neon-animation/animations/slide-from-right-animation.html">
+<link rel="import" href="../bower_components/neon-animation/animations/slide-right-animation.html">
+
+<dom-module id="anime-details">
+    <style>
+        #dialog {
+            display: flex;
+            box-shadow: none;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0);
+            justify-content: center;
+            pointer-events: none;
+        }
+        #dialogContent {
+            display: inline-block;
+            pointer-events: auto;
+            margin-top: auto;
+            margin-bottom: auto;
+            background-color: white;
+            width: 80%;
+            height: 80%;
+            max-height: 80%;
+            max-width: 80%;
+        }
+    </style>
+    <template>
+        <paper-dialog id="dialog" entry-animation="slide-from-right-animation" exit-animation="slide-right-animation">
+            <paper-material id="dialogContent" elevation="5">
+                THIS DIALOG IS WHERE ANIME DETAILS WILL GO.
+                MAX SIZE 80% x 80% of page.
+            </paper-material>
+        </paper-dialog>
+    </template>
+</dom-module>
+<script>
+    Polymer({
+        is: "anime-details",
+        properties: {
+            animeId: {
+                type: Number
+            },
+            anime: {
+                type: Object,
+                notify: true
+            }
+        },
+
+        ready: function() {
+            this.close();
+        },
+        //METHODS
+        open: function() {
+            this.$.dialog.open();
+        },
+        close: function() {
+            this.$.dialog.close();
+        }
+    });
+</script>
