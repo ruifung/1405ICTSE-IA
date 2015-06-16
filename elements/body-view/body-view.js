@@ -45,8 +45,8 @@ Polymer({
     _drawerViewObserver: function(newV, oldV) {
         if (newV === "options") {
             this.toggleClass("hidden",true,this.$.backBtn);
-        } else {;
-            this.toggleClass("hidden",false,this.$.backBtn)
+        } else {
+            this.toggleClass("hidden",false,this.$.backBtn);
         }
     },
     _drawerStateObserver: function(newV,oldV) {
@@ -76,6 +76,13 @@ Polymer({
     _registerButtonHandlers: function() {
         this.$.backBtn.onclick = function() {
             this._onSidebarButtonClick("options");
+            if(this.$.mainSelector.selected === "feedbackView") {
+                this.toggleClass("hidden",true,this.$.backBtn);
+                this.$.mainSelector.selected = "animeView";
+                this._toggleSidebarButtons(true);
+            } else {
+                this._onSidebarButtonClick("options");
+            }
         }.bind(this);
         
         this.$.genreButton.onclick = function() {
@@ -88,7 +95,17 @@ Polymer({
         
         this.$.feedbackBtn.onclick = function() {
             this.$.mainSelector.selected = "feedbackView";
+            this.toggleClass("hidden",false,this.$.backBtn);
+            this._toggleSidebarButtons(false);
         }.bind(this);
+    },
+    
+    _toggleSidebarButtons: function(toggle) {
+        this.$.genreButton.disabled = !toggle;
+        this.$.seasonsButton.disabled = !toggle;
+        this.$.sortButton.disabled = !toggle;
+        this.$.showFavBtn.disabled = !toggle;
+        this.$.feedbackBtn.disabled = !toggle;
     },
 
     _onSidebarButtonClick: function(button) {
