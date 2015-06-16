@@ -1,0 +1,104 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="feedback-view">
+    <style>
+        #wrapper {
+            text-align: center;
+            border: 10px solid transparent;
+            padding: 15px;
+            -webkit-border-image: url(border.png) 30 round;
+            -o-border-image: url(border.png) 30 round;
+            border-image: url(border.png) 30 round;
+        }
+            
+        #header {
+            font-style: brush
+        }
+            
+        #roundedcorners1 {
+            border-radius: 25px;
+            border: 2px solid #8AC007;
+            padding: 20px;
+            width: 100px;
+            height: 3px;
+        }
+            
+        #roundedcorners2 {
+            border-radius: 25px;
+            border: 2px solid #8AC007;
+            padding: 20px;
+            width: 500px;
+            height: 100px;
+        }
+    </style>
+    <template>
+    <div id="wrapper">
+        <h1 id="header"><u>Website Feedback Form</u></h1>
+        <form action="action_page.php" method="post">
+            
+            <strong>First name:</strong> 
+            <input id="roundedcorners1" name="Text1" type="text" required>
+            
+            <strong>Last Name:</strong>
+            <input id="roundedcorners1" name="Text1" type="text" required><br/>
+            
+            <br/>
+            
+            <strong>Email:</strong>
+            <input id="roundedcorners1" name="Text1" type="text" required>
+            
+            <strong>What is your age?</strong>
+            <input id="roundedcorners1" name="Text1" type="text" required><br/>
+            
+            <br/>
+            
+            <strong>Gender:</strong>
+            <input type="radio" name="gender" value="male">Male
+            <input type="radio" name="gender" value="female">Female<br/>
+            
+            <br/>
+            
+            <strong>Is this the first time you have visited this website?</strong>
+            <input type="radio" name="visits" value="yes">Yes
+            <input type="radio" name="visits" value="no">No<br/>
+            
+            <br/>
+            
+            <strong>How would you rate the functionality of this website?</strong>
+            <input type="radio" name="functionality" value="great">GREAT
+            <input type="radio" name="functionality" value="good">Good
+            <input type="radio" name="functionality" value="bad">Bad
+            <input type="radio" name="functionality" value="worse">Worse<br/>
+
+            <br/>
+            
+            <strong>What is the likelihood that you would visit this website again?</strong><br/>
+            <input type="radio" name="again" value="Definitely">Definitely<br/>
+            <input type="radio" name="again" value="Maybe">Maybe<br/>
+            <input type="radio" name="again" value="Not likely">Not likely<br/>
+            
+            <br/>
+            
+            <strong>Please tell us how can we improve this website and do provide any additional feedback.</strong><br/>
+            <textarea id="roundedcorners2" name="additional_feedback" rows="15" cols="100"></textarea><br/>
+            
+            <br/>
+            
+            <input type="submit" value="Send"/>
+            <input type="reset" value="Reset"/>
+        </form>
+        </div>
+    </template>
+</dom-module>
+<script>
+    Polymer({
+        is: "feedback-view",
+        
+        ready: function() {
+            this.popup();
+        },
+        popup: function() {
+            
+        },
+    });
+</script>

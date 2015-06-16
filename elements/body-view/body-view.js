@@ -77,11 +77,17 @@ Polymer({
         this.$.backBtn.onclick = function() {
             this._onSidebarButtonClick("options");
         }.bind(this);
+        
         this.$.genreButton.onclick = function() {
             this._onSidebarButtonClick("genres");
         }.bind(this);
+        
         this.$.seasonsButton.onclick = function() {
             this._onSidebarButtonClick("seasons");
+        }.bind(this);
+        
+        this.$.feedbackBtn.onclick = function() {
+            this.$.mainSelector.selected = "feedbackView";
         }.bind(this);
     },
 
