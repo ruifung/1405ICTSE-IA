@@ -5,12 +5,6 @@
     width: 100%
 }
 
-#navBar #busySpinner {
-    position: absolute;
-    margin: 10px;
-    right: 0px;
-}
-
 #navBar::shadow .paper-toolbar {
     height: 50px;
     margin: 0px;
@@ -53,7 +47,7 @@
     transition: opacity 0.5s linear;
 }
 
-#mainContainer {
+#mainContainer, #mainSelector {
     width: 100%;
     height: 100%;
 }
