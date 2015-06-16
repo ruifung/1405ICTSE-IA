@@ -1,9 +1,14 @@
 /*jslint ignore: start*/
 Polymer({
     animeLookup: {},
+    pendingAnimeLoad: 0,
     
     is: 'body-view',
     properties: {
+        loading: {
+            type: Boolean,
+            notify: true
+        },
         sidebarSelected: {
             type: String,
             notify: true,
@@ -23,6 +28,11 @@ Polymer({
             value: true,
             notify: true
         },
+        _animesPreFilter: {
+            type: Array,
+            value: [],
+            notify: true
+        },  
         _animes: {
             type: Array,
             value: [],
@@ -31,7 +41,11 @@ Polymer({
     },
     
     listeners: {
-        "anime-item-click": "onAnimeClick"
+        "anime-item-click": "onAnimeEvent",
+        "anime-preload": "onAnimeEvent",
+        "anime-load": "onAnimeEvent",
+        "anime-loaded": "onAnimeEvent",
+        "anime-allloaded": "onAnimeEvent"
     },
     
     ready: function() {
@@ -39,7 +53,10 @@ Polymer({
         this._registerButtonHandlers();
         this._updateAnimeView({status:"Currently Airing",full_page:true,year:2015});
     },
-
+    
+    logEvent: function(e) {
+        console.log(e);
+    },
 
     //Observers
     _drawerViewObserver: function(newV, oldV) {
@@ -107,6 +124,10 @@ Polymer({
         this.$.showFavBtn.disabled = !toggle;
         this.$.feedbackBtn.disabled = !toggle;
     },
+    
+    _toggleProgressBar: function(toggle) {
+        this.toggleClass("transparent",!toggle,this.$.progressBar);
+    },
 
     _onSidebarButtonClick: function(button) {
         setTimeout(function() {
@@ -116,20 +137,16 @@ Polymer({
 
     //Main View data
 
-    //Called to filter anime list.
-    _filter: function(data) {
-        if(!this.filterAdult) {
-            return true;
-        }
-        return !data.adult;
-    },
-
     //UPDATE THE ANIME VIEW.
     _updateAnimeView: function(options) {
         this.animeLookup = {};
+        this.currentAnimeView = options;
+        this.pendingAnimeLoad = 0;
+        this.fire("anime-preload");
         alAPI.anime.browse(options,function(status, data) {
             if (status) {
                 this._getFullAnimeData(data);
+                this.fire("anime-load");
             }
         }.bind(this));
     },
@@ -138,23 +155,66 @@ Polymer({
         var animeID;
         while (data.length > 0) {
             animeID = data.shift().id;
+            this.pendingAnimeLoad++;
             alAPI.anime.get("", animeID, function(status, data) {
                 if (status) {
-                    if(this._filter(data)) {
-                        if (data.description === null) {
-                            data.description = "No description available."
-                        }
-                        this.push("_animes",data);
-                        this.animeLookup[data.id] = data;
+                    if (data.description === null) {
+                        data.description = "No description available."
                     }
+                    this._animeDataLoaded(data);
+                } else {
+                    this.pendingAnimeLoad--;
                 }
             }.bind(this));
         }
     },
+    //Perform tasks when all results loaded.
+    _animeDataLoaded: function(anime) {
+        this.push("_animesPreFilter",anime);
+        this.animeLookup[anime.id] = anime;
+        this.pendingAnimeLoad--;
+        this.fire("anime-loaded");
+        if (this.pendingAnimeLoad === 0) {
+            this.fire("anime-allloaded");
+        }
+    },
     
-    onAnimeClick: function(e) {
-        this.$.details.open(this.animeLookup[e.detail.id]);
-    }
+    _filter: function(val,ind,arr) {
+        if (this.filterAdult) {
+            if (val.adult) {
+                return false;
+            }
+        }
+
+        return true;
+    },
+    
+    onAnimeEvent: function(e) {
+        switch(e.type) {
+            case "click":
+                this.$.details.open(this.animeLookup[e.detail.id]);
+                break;
+            case "anime-preload":
+                this.$.progressBar.indeterminate = true;
+                this._toggleProgressBar(true);
+                break;
+            case "anime-load":
+                var progressBar = this.$.progressBar;
+                progressBar.max = this.pendingAnimeLoad;
+                progressBar.indeterminate = false;
+                break;
+            case "anime-loaded":
+                this.$.progressBar.value++;
+                break;
+            case "anime-allloaded":
+                var animeTemp = this._animesPreFilter.filter(this._filter,this);
+                
+                this._toggleProgressBar(false);
+                this.splice("_animes",0,this._animes.length);
+                this.splice.apply(this,["_animes",0,0].concat(animeTemp));
+                break;
+        }        
+    },
     
 });
 /*jslint ignore: end*/

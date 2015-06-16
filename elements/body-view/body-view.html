@@ -11,7 +11,7 @@
 <link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
 <link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
 
 <link rel="import" href="../../bower_components/observe-js/observe-js.html">
@@ -60,10 +60,13 @@
             </paper-material>
             
             <!-- MAIN VIEW -->
-            <iron-pages main id="mainSelector" attr-for-selected="id" selected="animeView">
-                <anime-view id="animeView" animes="[[_animes]]"></anime-view>
-                <feedback-view id="feedbackView"></feedback-view>
-            </iron-pages>
+            <div main id="mainContainer">
+                <paper-progress id="progressBar" class="transparent"></paper-progress>
+                <iron-pages id="mainSelector" attr-for-selected="id" selected="animeView">
+                    <anime-view id="animeView" animes="[[_animes]]"></anime-view>
+                    <feedback-view id="feedbackView"></feedback-view>
+                </iron-pages>
+            </div>
         </paper-drawer-panel>
         
     </template>
