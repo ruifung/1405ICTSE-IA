@@ -20,6 +20,7 @@
 <link rel="import" href="../genre-list.html">
 <link rel="import" href="../anime-view.html">
 <link rel="import" href="../anime-details.html">
+<link rel="import" href="../feedback-view.html">
 
 <dom-module id="body-view">
     <link rel="import" type="css" href="body-view.css">
@@ -61,6 +62,7 @@
             <!-- MAIN VIEW -->
             <iron-pages main id="mainSelector" attr-for-selected="id" selected="animeView">
                 <anime-view id="animeView" animes="[[_animes]]"></anime-view>
+                <feedback-view id="feedbackView"></feedback-view>
             </iron-pages>
         </paper-drawer-panel>
         

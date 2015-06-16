@@ -1,5 +1,7 @@
 /*jslint ignore: start*/
 Polymer({
+    animeLookup: {},
+    
     is: 'body-view',
     properties: {
         sidebarSelected: {
@@ -27,7 +29,11 @@ Polymer({
             notify: true
         }
     },
-
+    
+    listeners: {
+        "anime-item-click": "onAnimeClick"
+    },
+    
     ready: function() {
         this.sidebarSelected = "options";
         this._registerButtonHandlers();
@@ -97,6 +103,7 @@ Polymer({
 
     //UPDATE THE ANIME VIEW.
     _updateAnimeView: function(options) {
+        this.animeLookup = {};
         alAPI.anime.browse(options,function(status, data) {
             if (status) {
                 this._getFullAnimeData(data);
@@ -115,20 +122,15 @@ Polymer({
                             data.description = "No description available."
                         }
                         this.push("_animes",data);
+                        this.animeLookup[data.id] = data;
                     }
                 }
             }.bind(this));
         }
     },
     
-    listeners: {
-        "anime-item-click": "onAnimeClick"
-    },
-
-
     onAnimeClick: function(e) {
-        console.log(e);
-        this.$.details.open();
+        this.$.details.open(this.animeLookup[e.detail.id]);
     }
     
 });
