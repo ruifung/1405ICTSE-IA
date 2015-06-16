@@ -191,7 +191,7 @@ Polymer({
     
     onAnimeEvent: function(e) {
         switch(e.type) {
-            case "click":
+            case "anime-item-click":
                 this.$.details.open(this.animeLookup[e.detail.id]);
                 break;
             case "anime-preload":
