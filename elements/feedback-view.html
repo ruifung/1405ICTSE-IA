@@ -1,6 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
 
 
 <dom-module id="feedback-view">
@@ -63,31 +64,37 @@
             <br/>
             
             <strong>Gender:</strong>
-            <paper-radio-button></paper-radio-button> Male
-            <paper-radio-button></paper-radio-button> Female
-            <!--<input type="radio" name="gender" value="male">Male
-            <input type="radio" name="gender" value="female">Female<br/>-->
+            <paper-radio-group selected="small">
+                <paper-radio-button name="genderM" label="Male">Male</paper-radio-button>
+                <paper-radio-button name="genderF" label="Female">Female</paper-radio-button>
+            </paper-radio-group>
             
             <br/>
             
             <strong>Is this the first time you have visited this website?</strong>
-            <input type="radio" name="visits" value="yes">Yes
-            <input type="radio" name="visits" value="no">No<br/>
-            
+            <paper-radio-group selected="small">
+                <paper-radio-button name="visits1" label="yes">Yes</paper-radio-button>
+                <paper-radio-button name="visits2" label="no">No</paper-radio-button>
+            </paper-radio-group>
+        
             <br/>
             
             <strong>How would you rate the functionality of this website?</strong>
-            <input type="radio" name="functionality" value="great">GREAT
-            <input type="radio" name="functionality" value="good">Good
-            <input type="radio" name="functionality" value="bad">Bad
-            <input type="radio" name="functionality" value="worse">Worse<br/>
+            <paper-radio-group selected="small">
+                <paper-radio-button name="func01" label="great">GREAT</paper-radio-button>
+                <paper-radio-button name="func02" label="good">Good</paper-radio-button>
+                <paper-radio-button name="func03" label="bad">Bad</paper-radio-button>
+                <paper-radio-button name="func04" label="worse">Worse</paper-radio-button>
+            </paper-radio-group>
 
             <br/>
             
             <strong>What is the likelihood that you would visit this website again?</strong><br/>
-            <input type="radio" name="again" value="Definitely">Definitely<br/>
-            <input type="radio" name="again" value="Maybe">Maybe<br/>
-            <input type="radio" name="again" value="Not likely">Not likely<br/>
+            <paper-radio-group selected="small">
+                <paper-radio-button name="a01" label="definitely">Definitely</paper-radio-button>
+                <paper-radio-button name="a02" label="maybe">Maybe</paper-radio-button>
+                <paper-radio-button name="a03" label="not likely">Not likely</paper-radio-button>
+            </paper-radio-group>
             
             <br/>
             
