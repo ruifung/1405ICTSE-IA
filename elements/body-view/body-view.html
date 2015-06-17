@@ -70,7 +70,7 @@
             <div main id="mainContainer">
                 <paper-toast id="toastNotify"></paper-toast>
                 <paper-progress id="progressBar" class="transparent"></paper-progress>
-                <iron-pages id="mainSelector" attr-for-selected="id" selected="animeView">
+                <iron-pages id="mainSelector" attr-for-selected="id" selected="{{mainPanelView}}">
                     <anime-view id="animeView" animes="[[_animes]]"></anime-view>
                     <feedback-view id="feedbackView"></feedback-view>
                 </iron-pages>

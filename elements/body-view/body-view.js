@@ -29,6 +29,11 @@ Polymer({
             type: String,
             observer: "_drawerStateObserver"
         },
+        mainPanelView: {
+            type: String,
+            value: "animeView",
+            observer: "_mainPanelObserver"
+        },
         filterAdult: {
             type: Boolean,
             value: true,
@@ -72,6 +77,17 @@ Polymer({
         } else {
             this.toggleClass("hidden",false,this.$.backBtn);
         }
+    },
+    _mainPanelObserver: function(newV,oldV) {
+        if(this.$[oldV] !== undefined) {
+            if(typeof this.$[oldV].viewChanged === "function") {
+                this.$[oldV].viewChanged(this.$[newV],this.$[oldV]);
+            }
+        }
+        if(!!this.$[newV].viewChanged) {
+            this.$[newV].viewChanged(this.$[newV],this.$[oldV]);
+        }
+        
     },
     _drawerStateObserver: function(newV,oldV) {
         switch(newV) {
