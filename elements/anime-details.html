@@ -6,7 +6,7 @@
 
 <dom-module id="anime-details">
     <style>
- 
+
         #dialog {
             display: flex;
             box-shadow: none;
@@ -30,10 +30,73 @@
             word-break: break-all;
             white-space: normal;
         }
+
+        #dialogContent h1 {
+            color:gray;
+            font-family: "Lucida Handwriting";
+            text-align:left;
+        }
+        #dialogContent img {
+            width: 225px;
+            height: 337px;
+            border:medium #FFFFFF solid;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #Description{
+            width: 200px;
+            height: 50px;
+            overflow:scroll;
+        }
+        #dialogContent div {
+            color:#BCC6CC;
+            font-size:medium;
+            font-style:oblique;
+            font-weight:bold;
+            margin: 0;
+            padding: 0;
+            text-align: left;
+        }
+        .column{
+            -webkit-column-count: 2; 
+        }
+        .auto-style1 {
+            margin-left: 130;
+        }
+
     </style>
     <template>
-        <paper-dialog id="dialog" with-backdrop entry-animation="slide-from-right-animation" exit-animation="slide-right-animation">
+        <paper-dialog id="dialog"
+                      with-backdrop entry-animation="slide-from-right-animation"
+                      exit-animation="slide-right-animation">
             <paper-material id="dialogContent" elevation="5">
+                <h1 id="Anime Name"><font size="50"></font></h1>
+                <div class="column">
+                	<div id="header">
+                		<div style="position:relative">
+                		<img src="[[anime.image_url_lge]]" style="border-left-width: 2.4;margin-left: 0px;margin-right: 0px;">
+                		<input type="button" id="favBtn" value="Favourite" 
+                               style="font-weight:bold; position:absolute; bottom:0;"
+                               on-click="_favourite"/>
+                	   </div>
+                    </div>
+                	<br><br>
+                	<div id="detail">
+                		<div id="English">English Name:<span style="color:#CCFFFF">[[anime.title_english]]</span></div>
+                		<div id="Japanese">Japanese Name:<span style="color:#CCFFFF">[[anime.title_japanese]]</span></div>
+                		<div id="OtherName">Other Name:<span style="color:#CCFFFF">[[anime.title_romaji]]</span></div>
+                		<div id="Genre">Genre:<span style="color:#CCFFFF">[[anime.genres]]</span></div>
+                		<div id="Classification">Classification:<span style="color:#CCFFFF">[[anime.classification]]</span></div>
+                		<p>Description:</p><div id="Description" class="auto-style1">[[anime.description]]<span style="color:#CCFFFF"></span></div>
+                		<div id="Status">Status: <span style="color:#CCFFFF">[[anime.airing_status]]</span></div>
+                		<div id="StartDate">Start Date: <span style="color:#CCFFFF">[[anime.start_date]]</span></div>
+                		<div id="EndDate">End Date: <span style="color:#CCFFFF">[[anime.end_date]]</span></div><br>
+                		<div id="TotalEpisode">Total Episode: <span style="color: #CCFFFF">[[anime.total_episodes]]</span></div><br>
+                		<div id="Popularity">Popularity: <span style="color:#CCFFFF">[[anime.popularity]]</span></div>
+                		<div id="Youtube">Watch in Youtube: <span style="color:#CCFFFF"></span></div><br>
+                	</div>
+                </div>
             </paper-material>
         </paper-dialog>
     </template>
@@ -58,7 +121,7 @@
         },
         //METHODS
         open: function(anime) {
-            this.$.dialogContent.innerHTML = JSON.stringify(anime);
+            this.anime = anime;
             this.$.dialog.open();
         },
         close: function() {
@@ -71,6 +134,17 @@
             if(e.target !== this.$.dialogContent) {
                 this.$.dialog.cancel();
             }
-        }
+        },
+        
+        _favourite: function () {
+		  var btn = this.$.favBtn;
+		  if (btn.isFav) {
+		  	btn.isFav = false;
+		  } else {
+		  	btn.isFav = true;
+		  }
+		  btn.value = btn.isFav ? "Unfavourite" : "Favourite";
+	   }
+
     });
 </script>

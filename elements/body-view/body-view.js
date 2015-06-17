@@ -227,7 +227,7 @@ Polymer({
             case "anime-allloaded":
                 var animeTemp = this._animesPreFilter.filter(this._filter,this);
                 this._toggleProgressBar(false);
-                _updateAnimesArray(animeTemp);
+                this._updateAnimesArray(animeTemp);
                 this.fire("notify-toast",{text:"Anime Loaded!"});
                 break;
         }        
@@ -240,7 +240,7 @@ Polymer({
     
     _updateAnimesArray: function(newArr) {
         //Use different sorters based on config.
-        newArr.sort(_animeSorter.name);
+        newArr.sort(this._animeSorter.name);
         this.splice.apply(this,["_animes",0,this._animes.length].concat(newArr));
     },
     
