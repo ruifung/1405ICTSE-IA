@@ -7,7 +7,7 @@
     <link rel="import" type="css" href="anime-item.css">
     <template>
         <paper-material id="itemContainer" elevation="[[elevation]]">
-            <paper-fab id="fab"></paper-fab>
+            <paper-fab id="fab" on-click="_fabEvent"></paper-fab>
             <div id="itemTitle" class="textshadows">[[animeName]]</div>
             <div id="itemDetails" class="nopointer textshadows">
                 <div id="itemDetailsTitle">
@@ -31,7 +31,8 @@
                 type: String
             },
             "animeImage": {
-                type: String
+                type: String,
+                observer: "_updateBackgroundImg"
             },
             "animeId": {
                 type: Number,
@@ -41,7 +42,7 @@
                 type: Boolean,
                 value: false,
                 notify: true,
-                observer: "updateDetailsView"
+                observer: "_updateDetailsView"
             }
         },
         listeners: {
@@ -53,17 +54,15 @@
             click: "_click"
         },
         ready: function() {
-            this.updateBackgroundImg(this.animeImage);
-            this._fabEvent();
+            
         },
         
-        _fabEvent: function() {
-            this.$.fab.onclick = function(e) {
-                e.stopPropagation();
-                this.fire("anime-item-click",{id:this.animeId});
-                this.detailsView = false;
-            }.bind(this);
+        _fabEvent: function(e) {
+            e.stopPropagation();
+            this.fire("anime-item-click",{id:this.animeId});
+            this.detailsView = false;
         },
+        
         _mouseEvent: function(e) {
             if (this.touched !== 0) {
                 return;
@@ -116,7 +115,7 @@
             this.fire("anime-item-click",{id:this.animeId});
         },
         
-        updateDetailsView: function(newV,oldV) {
+        _updateDetailsView: function(newV,oldV) {
             this.toggleClass("showDetails",newV,this.$.itemContainer);
             this.elevation = newV ? 3 : 1;
             if(newV === false) {
@@ -124,7 +123,7 @@
                 this.elevation = 1;
             }
         },
-        updateBackgroundImg: function(url) {
+        _updateBackgroundImg: function(url) {
             this.$.itemContainer.style.background = "url("+url+")";
         },
     });

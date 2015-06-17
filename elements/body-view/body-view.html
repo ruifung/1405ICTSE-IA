@@ -33,8 +33,10 @@
                     <!--Sidebar Toolbar-->
                     <paper-toolbar id="navBar">
                         <paper-button disabled>IA1405</paper-button>
-                        <paper-icon-button icon="arrow-back" id="backBtn"></paper-icon-button>
-                        <paper-icon-button icon="search" id="searchBtn"></paper-icon-button>
+                        <paper-icon-button icon="arrow-back" id="backBtn" on-click="_onButtonClick"></paper-icon-button>
+                        <paper-icon-button icon="search" id="searchBtn" on-click="_onButtonClick"></paper-icon-button>
+                        <paper-icon-button icon="clear" id="clearBtn" on-click="_onButtonClick"></paper-icon-button>
+                        <paper-icon-button icon="refresh" id="reloadBtn" on-click="_onButtonClick"></paper-icon-button>
                     </paper-toolbar>
                     
                     <!--Sidebar View Selector-->
@@ -44,11 +46,16 @@
                         <div id="options">
                             <paper-item><h2>Options</h2></paper-item>
                             <div>
-                                <paper-button raised id="genreButton" class="optionsBtn">Filter by Genre</paper-button>
-                                <paper-button raised id="seasonsButton" class="optionsBtn">Filter by Season</paper-button>
-                                <paper-button raised id="sortButton" class="optionsBtn">Sorting Options</paper-button>
-                                <paper-button raised id="showFavBtn" class="optionsBtn">Show Favourites</paper-button>
-                                <paper-button raised id="feedbackBtn" class="optionsBtn">Leave Feedback</paper-button>
+                                <paper-button raised id="genreBtn" class="optionsBtn" on-click="_onButtonClick">
+                                    Filter by Genre</paper-button>
+                                <paper-button raised id="seasonsBtn" class="optionsBtn" on-click="_onButtonClick">
+                                    Filter by Season</paper-button>
+                                <paper-button raised id="sortBtn" class="optionsBtn" on-click="_onButtonClick">
+                                    Sorting Options</paper-button>
+                                <paper-button raised id="showFavBtn" class="optionsBtn" on-click="_onButtonClick">
+                                    Show Favourites</paper-button>
+                                <paper-button raised id="feedbackBtn" class="optionsBtn" on-click="_onButtonClick">
+                                    Leave Feedback</paper-button>
                             </div>
                         </div>
                         <!-- Genre list selector -->

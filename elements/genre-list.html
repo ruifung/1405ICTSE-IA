@@ -52,9 +52,9 @@
         }
     </style>
     <template>
-        <paper-menu id="genreMenu" attr-for-selected="genreId" selected-values="{{selectedGenres}}" multi>
-            <template is="dom-repeat" id="genreRepeat" items="{{genres}}">         
-                <paper-item genre-id="[[item.id]]" class="genreItem">
+        <paper-menu id="genreMenu" attr-for-selected="genre" selected-values="{{selectedGenres}}" multi>
+            <template is="dom-repeat" id="genreRepeat" items="{{shownGenres}}">         
+                <paper-item genre="[[item.genre]]" class="genreItem">
                     <span>[[item.genre]]</span>
                     <iron-icon icon="check-circle"></iron-icon>                    
                 </paper-item>
@@ -70,12 +70,17 @@
             Polymer.IronResizableBehavior
         ],
         properties: {
-            genres: {
+            allGenres:  {
                 type: Array,
                 readOnly: true,
                 value: function() {
                     return [];
                 },
+                notify: true
+            },
+            shownGenres: {
+                type: Array,
+                computed: "_filterGenres(allGenres, filterAdult)",
                 notify: true
             },
             selectedGenres: {
@@ -87,7 +92,8 @@
             },
             filterAdult: {
                 type: Boolean,
-                value: false
+                value: false,
+                observer: "updateList"
             }
         },
         listeners: {
@@ -99,25 +105,27 @@
         updateList: function() {
             alAPI.getGenres(function (status, data) {
                 if (status) {
-                    if(this.filterAdult) {
-                        var newData = [];
-                        for (var i = 0; i < data.length; i++) {
-                            switch(data[i].genre) {
-                                case "Adult":
-                                case "Doujinshi":
-                                case "Hentai":
-                                    break;
-                                default:
-                                    newData.push(data[i]);
-                                    break;
-                            }
-                        }
-                        this._setGenres(newData);
-                        return;
-                    }
-                    this._setGenres(data);
+                    this._setAllGenres(data);
                 }
             }.bind(this))
         },
+        
+        _filterGenres: function(genres,adultFilter) {
+            if (!adultFilter) {
+                return genres;
+            }
+            return genres.filter(function(val,ind,arr) {
+                switch(val.genre) {
+                    case "Adult":
+                    case "Doujinshi":
+                    case "Hentai":
+                        return false;
+                        break;
+                    default:
+                        return true;
+                        break;
+                }
+            },this);
+        }
     });
 </script>
