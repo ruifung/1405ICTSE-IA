@@ -131,19 +131,19 @@
             this.$.dialog.cancel();
         },
         _clickHandler: function(e) {
-            if(e.target !== this.$.dialogContent) {
+            if(e.target === this.$.dialog) {
                 this.$.dialog.cancel();
             }
         },
         
-        _favourite: function () {
-		  var btn = this.$.favBtn;
-		  if (btn.isFav) {
-		  	btn.isFav = false;
-		  } else {
-		  	btn.isFav = true;
-		  }
-		  btn.value = btn.isFav ? "Unfavourite" : "Favourite";
+        _favourite: function (e) {
+            var btn = this.$.favBtn;
+		    if (btn.isFav) {
+                btn.isFav = false;
+            } else {
+                btn.isFav = true;
+		    }
+            btn.value = btn.isFav ? "Unfavourite" : "Favourite";
 	   }
 
     });
