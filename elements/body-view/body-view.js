@@ -71,7 +71,7 @@ Polymer({
     },
 
     //Observers
-    _drawerViewObserver: function(newV, oldV) {
+    _drawerViewObserver: function(newV) {
         if (newV === "options") {
             this.toggleClass("hidden",true,this.$.backBtn);
         } else {
@@ -89,7 +89,7 @@ Polymer({
         }
         
     },
-    _drawerStateObserver: function(newV,oldV) {
+    _drawerStateObserver: function(newV) {
         switch(newV) {
             case "drawer":
 
@@ -112,7 +112,7 @@ Polymer({
         newV.observer = new ArrayObserver(newV);
         newV.observer.open(onSelectionChanged);
     },
-    _pendingFiltersObserver: function(newV,oldV) {
+    _pendingFiltersObserver: function(newV) {
         if (newV) {
             this.$.reloadBtn.icon = "check";
         } else {
@@ -227,7 +227,7 @@ Polymer({
             case "anime-allloaded":
                 var animeTemp = this._animesPreFilter.filter(this._filter,this);
                 this._toggleProgressBar(false);
-                this.splice.apply(this,["_animes",0,this._animes.length].concat(animeTemp));
+                _updateAnimesArray(animeTemp);
                 this.fire("notify-toast",{text:"Anime Loaded!"});
                 break;
         }        
@@ -236,6 +236,25 @@ Polymer({
     
     _filterRequestOptions: function(reqOptions) {
         return reqOptions;
+    },
+    
+    _updateAnimesArray: function(newArr) {
+        //Use different sorters based on config.
+        newArr.sort(_animeSorter.name);
+        this.splice.apply(this,["_animes",0,this._animes.length].concat(newArr));
+    },
+    
+    _animeSorter : {
+        name: function(arg1, arg2) {
+            return 0;
+        },
+        genre: function(arg1, arg2) {
+            return 0;
+        },
+        nextep: function(arg1, arg2) {
+            return 0;
+        },
+        
     },
     
     //UPDATE THE ANIME VIEW.
@@ -284,7 +303,7 @@ Polymer({
     },
     
     //ANIME FILTER FUNCTION.
-    _filter: function(val,ind,arr) {
+    _filter: function(val) {
         var keep = true;
         if (this.filterAdult) {
             if (val.adult) {
