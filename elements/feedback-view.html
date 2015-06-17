@@ -45,6 +45,7 @@
         <h1 id="header"><u>Website Feedback Form</u></h1>
         <form action="action_page.php" method="post">
             
+            <!--<paper-input label="Your Name"></paper-input><br/>-->
             <strong>First name:</strong> 
             <input id="roundedcorners1" name="Text1" type="text" required>
             
@@ -62,8 +63,10 @@
             <br/>
             
             <strong>Gender:</strong>
-            <input type="radio" name="gender" value="male">Male
-            <input type="radio" name="gender" value="female">Female<br/>
+            <paper-radio-button></paper-radio-button> Male
+            <paper-radio-button></paper-radio-button> Female
+            <!--<input type="radio" name="gender" value="male">Male
+            <input type="radio" name="gender" value="female">Female<br/>-->
             
             <br/>
             
@@ -93,8 +96,6 @@
             
             <br/>
             
-            <paper-input label="Your Name"></paper-input>
-            <paper-radio-button></paper-radio-button>
             <paper-button raised>Submit</paper-button>
             <paper-button raised>Reset</paper-button>
         </form>
@@ -124,7 +125,7 @@
         popup: function(message) {
             //Fires toast-notify event, this event is handled in body view.
             //Will show a toast notification.
-            this.fire("toast-notify",{text:message});
+            this.fire("notify-toast",{text:message});
         },
     });
 
