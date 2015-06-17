@@ -1,5 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
+
 <dom-module id="feedback-view">
     <style>
         #wrapper {
@@ -30,6 +31,12 @@
             width: 500px;
             height: 100px;
         }
+        
+        paper-button {
+            background: #673ab7;
+            color: white;
+        }
+        
     </style>
     <template>
     <div id="wrapper">
@@ -84,8 +91,10 @@
             
             <br/>
             
-            <input type="submit" value="Send"/>
-            <input type="reset" value="Reset"/>
+            <paper-input label="Your Name"></paper-input>
+            <paper-radio-button></paper-radio-button>
+            <paper-button raised>Submit</paper-button>
+            <paper-button raised>Reset</paper-button>
         </form>
         </div>
     </template>
@@ -101,4 +110,5 @@
             
         },
     });
+
 </script>
