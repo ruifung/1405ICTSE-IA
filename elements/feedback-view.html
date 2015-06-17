@@ -1,4 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
 
 
 <dom-module id="feedback-view">
@@ -104,10 +106,25 @@
         is: "feedback-view",
         
         ready: function() {
-            this.popup();
-        },
-        popup: function() {
             
+        },
+        viewChanged: function(newView,oldView) {
+            //USAGE OF THIS FUNCTION IS NOT NESSACARY.
+            //ONLY USE IF YOU ACTUALLY WANT TO DO SOMETHING WHEN THE FOLLOWING HAPPENS.
+            if(newView === this) {
+                //Do something when switching to this view.
+                this.popup();
+            }
+            if(oldView === this) {
+                //Do something when switching away from this view.
+                //E.g. popup with thank you for your message
+                
+            }
+        },
+        popup: function(message) {
+            //Fires toast-notify event, this event is handled in body view.
+            //Will show a toast notification.
+            this.fire("toast-notify",{text:message});
         },
     });
 
