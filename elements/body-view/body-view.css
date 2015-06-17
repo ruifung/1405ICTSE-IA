@@ -56,6 +56,13 @@
     overflow-y: auto;
 }
 
+#toastNotify {
+    position: absolute;
+    z-index: 5;
+    width: auto;
+    text-align: center;
+}
+
 .hidden {
     display: none;
 }

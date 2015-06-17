@@ -51,7 +51,9 @@ Polymer({
         "anime-preload": "_onAnimeEvent",
         "anime-load": "_onAnimeEvent",
         "anime-loaded": "_onAnimeEvent",
-        "anime-allloaded": "_onAnimeEvent"
+        "anime-allloaded": "_onAnimeEvent",
+        "main-view-change": "_changeViewEvent",
+        "notify-toast": "_notifyToastEvent"
     },
     
     ready: function() {
@@ -117,6 +119,34 @@ Polymer({
     },
     
     //AIO BUTTON HANDLER.
+    
+    _changeViewEvent: function(e) {
+        if(this.$.mainSelector.selected === "feedbackView") {
+            this.toggleClass("hidden",true,this.$.backBtn);
+            this._toggleSidebarButtons(true);
+        }
+        this.$.mainSelector.selected = e.detail.view;
+    },
+    
+    _notifyToastEvent: function(e) {
+        if (this.$.toastNotify.visible) {
+            this.$.toastNofity.hide();
+        }
+        var originalDuration = this.$.toastNotify.duration;
+        if(!e.detail.text) {
+            return;
+        }
+        if(!!e.detail.duration) {
+            this.$.toastNotify.duration = e.detail.duration;
+        }
+        this.$.toastNotify.text = e.detail.text;
+        setTimeout(function(){
+            this.$.toastNotify.text = "";
+            this.$.toastNotify.duration = originalDuration;
+        }.bind(this),this.$.toastNotify.duration+100)
+        this.$.toastNotify.toggle();
+    },
+    
     _onButtonClick: function(e) {
         setTimeout(function() {
             switch(e.target.domHost.id) {
@@ -182,9 +212,7 @@ Polymer({
                 var animeTemp = this._animesPreFilter.filter(this._filter,this);
                 this._toggleProgressBar(false);
                 this.splice.apply(this,["_animes",0,this._animes.length].concat(animeTemp));
-                console.log(this._animesPreFilter.slice(0));
-                console.log(animeTemp.slice(0));
-                console.log(this._animes.slice(0));
+                this.fire("notify-toast",{text:"Anime Loaded!"});
                 break;
         }        
     },
