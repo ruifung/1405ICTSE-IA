@@ -15,20 +15,19 @@
             height: 100%;
             background-color: rgba(0,0,0,0);
             justify-content: center;
-            
+            overflow: hidden;
         }
         #dialogContent {
-            display: inline-block;
+            display: inline-flex;
             pointer-events: auto;
             margin-top: auto;
             margin-bottom: auto;
             padding: 0;
-            background-color: var(--google-green-300);
+            flex-direction: row;
+            flex-wrap: nowrap;
             max-height: 80%;
             max-width: 80%;
-            word-wrap: break-word;       /* Internet Explorer 5.5+ */
-            word-break: break-all;
-            white-space: normal;
+            background-color: var(--google-green-300);
         }
         
         @media (max-width: 1100px) {
@@ -38,8 +37,10 @@
             }
             #dialogContent > img {
                 max-width: 50%;
+                min-width: 240px;
             }
             #title {
+                text-decoration: underline;
                 @apply(--paper-font-subhead)
             }
         }
@@ -50,9 +51,11 @@
                 height: 70%;
             }
             #dialogContent > img {
-                max-width: 30%;
+                max-width: 40%;
+                min-width: 250px;
             }
             #title {
+                min-height: 25px;
                 @apply(--paper-font-title)
             }
         }
@@ -62,13 +65,23 @@
             height: 100%;
             max-height: 100%;
             background-color: white;
-            float: left;
+            
             margin-right: 5px;
             margin-bottom: 5px;
         }
         
+        #dialogContent > #textSide {
+            display: flex;
+            flex-direction: column;
+            overflow-y: hidden;
+        }
+        
         #title {
             white-space: normal !important;
+        }
+        
+        #descText {
+            overflow-y: auto;
         }
     </style>
     <template>
@@ -77,13 +90,19 @@
                       exit-animation="slide-right-animation">
             <paper-material id="dialogContent" elevation="5">
                 <img src="[[anime.image_url_lge]]">
-                <p>
+                <div id="textSide">
                     <span id="title">[[anime.title_romaji]]</span><br>
                     <span id="jptitle">Japanese Title: <span>[[anime.title_japanese]]</span></span><br>
                     <span id="altNames">Alternative Names: <span>[[altNames]]</span></span><br>
+                    <span id="popularity">Popularity Rank: <span>[[anime.popularity]]</span></span><br>
                     <span id="airStatus">Airing Status: <span>[[anime.airing_status]]</span></span><br>
                     <span id="classification">Age Rating: <span>[[classification]]</span></span><br>
-                </p>
+                    <span id="totalEps">Total Episodes: <span>[[anime.total_episodes]]</span></span><br>
+                    <span id="startDate">First Episode Aired: <span>[[startDate]]</span></span><br>
+                    <span id="endDate">Last Episode Aired: <span>[[endDate]]</span></span><br>
+                    <span id="description">Description: </span><br>
+                    <div id="descText"></div>
+                </div>
             </paper-material>
         </paper-dialog>
     </template>
@@ -97,7 +116,8 @@
             },
             anime: {
                 type: Object,
-                notify: true
+                notify: true,
+                observer: "_animeChangedObserver"
             },
             altNames: {
                 type: String,
@@ -106,6 +126,14 @@
             classification: {
                 type: String,
                 computed: "_getClassification(anime)"
+            },
+            startDate: {
+                ype: String,
+                computed: "_getStartDate(anime)"
+            },
+            endDate: {
+                ype: String,
+                computed: "_getEndDate(anime)"
             }
         },
         listeners: {
@@ -113,6 +141,24 @@
         },
         ready: function() {
             this.close();
+        },
+        
+        _animeChangedObserver: function(newV) {
+            this.$.descText.innerHTML = newV.description;
+        },
+        
+        _getStartDate: function(anime) {
+            if (anime.start_date === null) {
+                return "N/A";
+            }
+            else return anime.start_date.toLocaleDateString();
+        },
+        
+        _getEndDate: function(anime) {
+            if (anime.end_date === null) {
+                return "N/A";
+            }
+            else return anime.end_date.toLocaleDateString();
         },
         
         _getClassification: function(anime) {
@@ -130,7 +176,6 @@
                 return;
             }
             var str = ""
-            console.log(anime);
             if (anime.title_english !== anime.title_romaji) {
                 str = str + anime.title_english;
             }
@@ -147,7 +192,7 @@
                 }
             }
             if (str === "") {
-                str = "None";
+                str = "N/A";
             }
             return str;
         },
