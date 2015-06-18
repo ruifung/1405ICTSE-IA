@@ -71,15 +71,11 @@
                       with-backdrop entry-animation="slide-from-right-animation"
                       exit-animation="slide-right-animation">
             <paper-material id="dialogContent" elevation="5">
-                <h1 id="Anime Name"><font size="50"></font></h1>
+                <h1 id="Anime Name"><font size="50">[[anime.title_romaji]]</font></h1>
                 <div class="column">
                 	<div id="header">
                 		<div style="position:relative">
                 		<img src="[[anime.image_url_lge]]" style="border-left-width: 2.4;margin-left: 0px;margin-right: 0px;">
-                		<input type="button" id="favBtn" value="Favourite" 
-                               style="font-weight:bold; position:absolute; bottom:0;"
-                               on-click="_favourite"/>
-                	   </div>
                     </div>
                 	<br><br>
                 	<div id="detail">
@@ -135,16 +131,5 @@
                 this.$.dialog.cancel();
             }
         },
-        
-        _favourite: function (e) {
-            var btn = this.$.favBtn;
-		    if (btn.isFav) {
-                btn.isFav = false;
-            } else {
-                btn.isFav = true;
-		    }
-            btn.value = btn.isFav ? "Unfavourite" : "Favourite";
-	   }
-
     });
 </script>
