@@ -106,7 +106,7 @@
                     <span id="totalEps">Total Episodes: <span>[[anime.total_episodes]]</span></span><br>
                     <span id="startDate">First Episode Aired: <span>[[startDate]]</span></span><br>
                     <span id="endDate">Last Episode Aired: <span>[[endDate]]</span></span><br>
-                    <span id="nextEp">Next Episode Airing: <span id="nextEpTime"></span>[[anime.airing.time]]</span>
+                    <span id="nextEp">Next Episode Airing: <span id="nextEpTime"></span>[[anime.airing.time]]</span><br>
                     <span id="watchTrailer">Trailer: <a id="trailerLink" target="_blank">Watch on YouTube</a></span><br>
                     <span id="description">Description: </span><br>
                     <div id="descText"></div>
@@ -152,9 +152,8 @@
         },
         
         _animeChangedObserver: function(newV) {
-            console.log(newV)
             this.$.descText.innerHTML = newV.description;
-            if (newV.youtube_id.length > 0) {
+            if (newV.youtube_id !== null) {
                 this.toggleClass("hidden",false,this.$.watchTrailer);
                 this.$.trailerLink.href = "https://www.youtube.com/watch?v=" + newV.youtube_id;
             } else {
