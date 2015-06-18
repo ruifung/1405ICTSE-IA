@@ -3,7 +3,7 @@
 <link rel="import" href="../bower_components/paper-material/paper-material.html">
 <link rel="import" href="../bower_components/neon-animation/animations/slide-from-right-animation.html">
 <link rel="import" href="../bower_components/neon-animation/animations/slide-right-animation.html">
-<link rel="import" href="../bower_components/paper-styles/color.html">
+<link rel="import" href="../bower_components/paper-styles/paper-styles.html">
 
 <dom-module id="anime-details">
     <style>
@@ -22,82 +22,68 @@
             pointer-events: auto;
             margin-top: auto;
             margin-bottom: auto;
+            padding: 0;
             background-color: var(--google-green-300);
-            width: 80%;
-            height: 80%;
             max-height: 80%;
             max-width: 80%;
             word-wrap: break-word;       /* Internet Explorer 5.5+ */
             word-break: break-all;
             white-space: normal;
         }
-
-        #dialogContent h1 {
-            color:gray;
-            font-family: "Lucida Handwriting";
-            text-align:left;
+        
+        @media (max-width: 1100px) {
+            #dialogContent {
+                width: 80%;
+                height: 80%;
+            }
+            #dialogContent > img {
+                max-width: 50%;
+            }
+            #title {
+                @apply(--paper-font-subhead)
+            }
         }
-        #dialogContent img {
-            width: 225px;
-            height: 337px;
-            border:medium #FFFFFF solid;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
+        
+        @media (min-width: 1100px) {
+            #dialogContent {
+                width: 70%;
+                height: 70%;
+            }
+            #dialogContent > img {
+                max-width: 30%;
+            }
+            #title {
+                @apply(--paper-font-title)
+            }
         }
-        #Description{
-            width: 500px;
-            height: 100px;
-            overflow:scroll;
+        
+        #dialogContent > img {
+            width: auto;
+            height: 100%;
+            max-height: 100%;
+            background-color: white;
             float: left;
-            border: 1px solid red;
+            margin-right: 5px;
+            margin-bottom: 5px;
         }
-        #dialogContent div {
-            color: var(--google-green-500);
-            font-size:medium;
-            font-style:oblique;
-            font-weight:bold;
-            margin: 0;
-            padding: 0;
-            text-align: left;
+        
+        #title {
+            white-space: normal !important;
         }
-        .column{
-            -webkit-column-count: 2; 
-        }
-        .auto-style1 {
-            margin-left: 130;
-        }
-
     </style>
     <template>
         <paper-dialog id="dialog"
                       with-backdrop entry-animation="slide-from-right-animation"
                       exit-animation="slide-right-animation">
             <paper-material id="dialogContent" elevation="5">
-                <h1 id="Anime Name"><font size="50">[[anime.title_romaji]]</font></h1>
-                <div class="column">
-                	<div id="header">
-                		<div style="position:relative">
-                		<img src="[[anime.image_url_lge]]" style="border-left-width: 2.4;margin-left: 0px;margin-right: 0px;">
-                    </div>
-                	<br><br>
-                	<div id="detail">
-                        <div id="Description" class="auto-style1"><p>Description:</p>[[anime.description]]<span style="color:#CCFFFF"></span></div>
-                        
-                		<div id="English">English Name:<span style="color:#CCFFFF">[[anime.title_english]]</span></div>
-                		<div id="Japanese">Japanese Name:<span style="color:#CCFFFF">[[anime.title_japanese]]</span></div>
-                		<div id="OtherName">Other Name:<span style="color:#CCFFFF">[[anime.title_romaji]]</span></div>
-                		<div id="Genre">Genre:<span style="color:#CCFFFF">[[anime.genres]]</span></div>
-                		<div id="Classification">Classification:<span style="color:#CCFFFF">[[anime.classification]]</span></div>
-                		
-                		<div id="Status">Status: <span style="color:#CCFFFF">[[anime.airing_status]]</span></div>
-                		<div id="StartDate">Start Date: <span style="color:#CCFFFF">[[anime.start_date]]</span></div>
-                		<div id="EndDate">End Date: <span style="color:#CCFFFF">[[anime.end_date]]</span></div><br>
-                		<div id="TotalEpisode">Total Episode: <span style="color: #CCFFFF">[[anime.total_episodes]]</span></div><br>
-                		<div id="Popularity">Popularity: <span style="color:#CCFFFF">[[anime.popularity]]</span></div>
-                		<div id="Youtube">Watch in Youtube: <span style="color:#CCFFFF"></span></div><br>
-                	</div>
-                </div>
+                <img src="[[anime.image_url_lge]]">
+                <p>
+                    <span id="title">[[anime.title_romaji]]</span><br>
+                    <span id="jptitle">Japanese Title: <span>[[anime.title_japanese]]</span></span><br>
+                    <span id="altNames">Alternative Names: <span>[[altNames]]</span></span><br>
+                    <span id="airStatus">Airing Status: <span>[[anime.airing_status]]</span></span><br>
+                    <span id="classification">Age Rating: <span>[[classification]]</span></span><br>
+                </p>
             </paper-material>
         </paper-dialog>
     </template>
@@ -112,6 +98,14 @@
             anime: {
                 type: Object,
                 notify: true
+            },
+            altNames: {
+                type: String,
+                computed: "_getAltNames(anime)"
+            },
+            classification: {
+                type: String,
+                computed: "_getClassification(anime)"
             }
         },
         listeners: {
@@ -119,6 +113,43 @@
         },
         ready: function() {
             this.close();
+        },
+        
+        _getClassification: function(anime) {
+            if (!anime.classification) {
+                return "No rating available";
+            }
+            if (anime.classification.length === 0) {
+                return "No rating available";
+            };
+            return anime.classification;
+        },
+        
+        _getAltNames: function(anime) {
+            if(anime === undefined) {
+                return;
+            }
+            var str = ""
+            console.log(anime);
+            if (anime.title_english !== anime.title_romaji) {
+                str = str + anime.title_english;
+            }
+            if (anime.synonyms.length > 0) {
+                if (str !== "") {
+                    str = str + " ,";
+                }
+                var synonyms = anime.synonyms.slice(0)
+                while (synonyms.length > 0) {
+                    str = str + synonyms.shift();
+                    if (synonyms.length > 0) {
+                        str = str + " ,";
+                    }
+                }
+            }
+            if (str === "") {
+                str = "None";
+            }
+            return str;
         },
         //METHODS
         open: function(anime) {

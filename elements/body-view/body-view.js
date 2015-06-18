@@ -130,7 +130,6 @@ Polymer({
         this.$.genreBtn.disabled = !toggle;
         this.$.seasonsBtn.disabled = !toggle;
         this.$.sortBtn.disabled = !toggle;
-        this.$.showFavBtn.disabled = !toggle;
         this.$.feedbackBtn.disabled = !toggle;
         this.$.aboutBtn.disabled = !toggle;
     },
@@ -276,7 +275,6 @@ Polymer({
                     cmp2 = arg2.airing.time.getTime();
                 }
             }
-            console.log(cmp1,cmp2);
             if (cmp1 === 0 && cmp1 !== cmp2) {
                 return 1;
             }
