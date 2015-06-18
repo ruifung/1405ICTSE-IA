@@ -3,6 +3,7 @@
 <link rel="import" href="../bower_components/paper-material/paper-material.html">
 <link rel="import" href="../bower_components/neon-animation/animations/slide-from-right-animation.html">
 <link rel="import" href="../bower_components/neon-animation/animations/slide-right-animation.html">
+<link rel="import" href="../bower_components/paper-styles/color.html">
 
 <dom-module id="anime-details">
     <style>
@@ -21,7 +22,7 @@
             pointer-events: auto;
             margin-top: auto;
             margin-bottom: auto;
-            background-color: white;
+            background-color: var(--google-green-300);
             width: 80%;
             height: 80%;
             max-height: 80%;
@@ -45,12 +46,14 @@
             margin-right: auto;
         }
         #Description{
-            width: 200px;
-            height: 50px;
+            width: 500px;
+            height: 100px;
             overflow:scroll;
+            float: left;
+            border: 1px solid red;
         }
         #dialogContent div {
-            color:#BCC6CC;
+            color: var(--google-green-500);
             font-size:medium;
             font-style:oblique;
             font-weight:bold;
@@ -79,12 +82,14 @@
                     </div>
                 	<br><br>
                 	<div id="detail">
+                        <div id="Description" class="auto-style1"><p>Description:</p>[[anime.description]]<span style="color:#CCFFFF"></span></div>
+                        
                 		<div id="English">English Name:<span style="color:#CCFFFF">[[anime.title_english]]</span></div>
                 		<div id="Japanese">Japanese Name:<span style="color:#CCFFFF">[[anime.title_japanese]]</span></div>
                 		<div id="OtherName">Other Name:<span style="color:#CCFFFF">[[anime.title_romaji]]</span></div>
                 		<div id="Genre">Genre:<span style="color:#CCFFFF">[[anime.genres]]</span></div>
                 		<div id="Classification">Classification:<span style="color:#CCFFFF">[[anime.classification]]</span></div>
-                		<p>Description:</p><div id="Description" class="auto-style1">[[anime.description]]<span style="color:#CCFFFF"></span></div>
+                		
                 		<div id="Status">Status: <span style="color:#CCFFFF">[[anime.airing_status]]</span></div>
                 		<div id="StartDate">Start Date: <span style="color:#CCFFFF">[[anime.start_date]]</span></div>
                 		<div id="EndDate">End Date: <span style="color:#CCFFFF">[[anime.end_date]]</span></div><br>
