@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+    
     <head>
         <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
         <script src="bower_components/custom-event-polyfill/custom-event-polyfill.js"></script>
@@ -20,8 +21,7 @@
             alAPI.init();
             function onReady() {
                 var microtaskInterval = 100;
-                
-                //Because Object.observe is only support on chronium browsers.
+                //Because Object.observe is only supported on chronium browsers.
                 //Therefore, other browsers requires a timed task to check as part of observe-js.
                 if(!Object.observe) {
                     function runMicrotasks() {

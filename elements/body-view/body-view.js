@@ -15,6 +15,11 @@ Polymer({
             value: false,
             observer: "_pendingFiltersObserver"
         },
+        sortBy: {
+            type: String,
+            notify: true,
+            value: "nextep"
+        },
         sidebarSelected: {
             type: String,
             notify: true,
@@ -127,6 +132,7 @@ Polymer({
         this.$.sortBtn.disabled = !toggle;
         this.$.showFavBtn.disabled = !toggle;
         this.$.feedbackBtn.disabled = !toggle;
+        this.$.aboutBtn.disabled = !toggle;
     },
     
     _toggleProgressBar: function(toggle) {
@@ -168,7 +174,7 @@ Polymer({
             switch(e.target.domHost.id) {
                 case "backBtn":
                     this.sidebarSelected = "options";
-                    if(this.$.mainSelector.selected === "feedbackView") {
+                    if(this.$.mainSelector.selected !== "animeView") {
                         this.toggleClass("hidden",true,this.$.backBtn);
                         this.$.mainSelector.selected = "animeView";
                         this._toggleSidebarButtons(true);
@@ -183,11 +189,17 @@ Polymer({
                     this.sidebarSelected = "seasons";
                     break;
                 case "sortBtn":
+                    this.sidebarSelected = "sorting";
                     break;
                 case "showFavBtn":
                     break;
                 case "feedbackBtn":
                     this.$.mainSelector.selected = "feedbackView";
+                    this.toggleClass("hidden",false,this.$.backBtn);
+                    this._toggleSidebarButtons(false);
+                    break;
+                case "aboutBtn":
+                    this.$.mainSelector.selected = "aboutView";
                     this.toggleClass("hidden",false,this.$.backBtn);
                     this._toggleSidebarButtons(false);
                     break;
@@ -240,19 +252,41 @@ Polymer({
     
     _updateAnimesArray: function(newArr) {
         //Use different sorters based on config.
-        newArr.sort(this._animeSorter.name);
+        if (!!this._animeSorter[this.sortBy]) {
+            console.log(this._animeSorter[this.sortBy]);
+            newArr.sort(this._animeSorter[this.sortBy].bind(this._animeSorter));
+        }
         this.splice.apply(this,["_animes",0,this._animes.length].concat(newArr));
     },
     
     _animeSorter : {
         name: function(arg1, arg2) {
-            return 0;
-        },
-        genre: function(arg1, arg2) {
-            return 0;
+            return arg1.title_romaji.localeCompare(arg2.title_romaji);
         },
         nextep: function(arg1, arg2) {
-            return 0;
+            var cmp1 = 0;
+            var cmp2 = 0;
+            if (!!arg1.airing) {
+                if(!!arg1.airing.time) {
+                    cmp1 = arg1.airing.time.getTime();
+                }
+            }
+            if (!!arg2.airing) {
+                if(!!arg2.airing.time) {
+                    cmp2 = arg2.airing.time.getTime();
+                }
+            }
+            console.log(cmp1,cmp2);
+            if (cmp1 === 0 && cmp1 !== cmp2) {
+                return 1;
+            }
+            if (cmp1 === cmp2) {
+                return this.name(arg1,arg2);
+            }
+            return cmp1 - cmp2;
+        },
+        popularity: function(arg1, arg2) {
+            return arg1.popularity - arg2.popularity;
         },
         
     },
@@ -281,6 +315,17 @@ Polymer({
                 if (status) {
                     if (data.description === null) {
                         data.description = "No description available."
+                    }
+                    if (data.start_date !== null) {
+                        data.start_date = new Date(data.start_date);
+                    }
+                    if (data.end_date !== null) {
+                        data.end_date = new Date(data.end_date);
+                    }
+                    if (!!data.airing) {
+                        if (!!data.airing.time) {
+                            data.airing.time = new Date(data.airing.time);
+                        }
                     }
                     this._animeDataLoaded(data);
                 } else {

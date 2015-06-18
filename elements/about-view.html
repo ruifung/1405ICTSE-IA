@@ -1,0 +1,69 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/paper-styles/paper-styles.html">
+
+<dom-module id="about-view">
+    <style>
+        #container {
+            display: flex;
+            justify-content: center;
+            margin-left: auto;
+            margin-right: auto;
+            overflow: auto;
+            height: 100%;
+            background-color: var(--paper-light-blue-50);
+        }
+        h1 {
+            clear:both;
+            @apply(--paper-font-title)
+        }
+        h3 {
+            @apply(--paper-font-subhead)
+        }
+        h4{
+            @apply(--paper-font-body2)
+        }
+        li, span {
+            @apply(--paper-font-body1)
+        }
+        img {
+            width: 100%;
+            float: right;
+        }
+        paper-material {
+            width: auto;
+            background-color: var(--google-grey-100);
+        }
+    </style>
+    <template>
+        <div id="container">
+            <paper-material elevation="4">
+                <img 
+                    src="http://statici.behindthevoiceactors.com/behindthevoiceactors/_img/games/banner_1382.jpg"
+                    >
+                <br>
+                <h1>ABOUT PROJECT</h1>
+                <h3>Project IA1405.</h3>
+                <h4>Team Members:</h4>
+                <ul>
+                    <li>Yip Rui Fung (TP034682)</li>
+                    <li>Navinder Singh (TP035392)</li>
+                    <li>Ong Shin Yee ()</li>
+                </ul>
+                <h4>Sources:</h4>
+                <ul>
+                    <li>AniList (<a href="http://anilist.co">http://anilist.co</a>)</li>
+                    <li>Polymer 1.x (<a href="http://polymer-project.org">http://polymer-project.org</a>)</li>
+                    <li>w3schools (<a href="http://www.w3schools.com">http://www.w3schools.com</a>)</li>
+                    <li>Mozila Developer Network (<a href="http://developer.mozilla.org">http://developer.mozilla.org</a>)</li>
+                </ul>
+                <span>Project IA1405 is hosted on Github Pages (<a href="https://pages.github.com">https://pages.github.com</a>).</span>
+            </paper-material>
+        </div>
+    </template>
+</dom-module>
+<script>
+    Polymer({
+        is: "about-view"
+    });
+</script>
