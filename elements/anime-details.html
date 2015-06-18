@@ -18,6 +18,7 @@
             overflow: hidden;
         }
         #dialogContent {
+            position: relative;
             display: inline-flex;
             pointer-events: auto;
             margin-top: auto;
@@ -83,12 +84,17 @@
         #descText {
             overflow-y: auto;
         }
+        
+        .hidden {
+            display: none;
+        }
     </style>
     <template>
         <paper-dialog id="dialog"
                       with-backdrop entry-animation="slide-from-right-animation"
                       exit-animation="slide-right-animation">
             <paper-material id="dialogContent" elevation="5">
+                <google-youtube></google-youtube>
                 <img src="[[anime.image_url_lge]]">
                 <div id="textSide">
                     <span id="title">[[anime.title_romaji]]</span><br>
@@ -100,6 +106,7 @@
                     <span id="totalEps">Total Episodes: <span>[[anime.total_episodes]]</span></span><br>
                     <span id="startDate">First Episode Aired: <span>[[startDate]]</span></span><br>
                     <span id="endDate">Last Episode Aired: <span>[[endDate]]</span></span><br>
+                    <span id="watchTrailer">Trailer: <a id="trailerLink" target="_blank">Watch on YouTube</a></span><br>
                     <span id="description">Description: </span><br>
                     <div id="descText"></div>
                 </div>
@@ -145,6 +152,13 @@
         
         _animeChangedObserver: function(newV) {
             this.$.descText.innerHTML = newV.description;
+            if (newV.youtube_id.length > 0) {
+                this.toggleClass("hidden",false,this.$.watchTrailer);
+                this.$.trailerLink.href = "https://www.youtube.com/watch?v=" + newV.youtube_id;
+            } else {
+                this.toggleClass("hidden",true,this.$.watchTrailer);
+                this.$.trailerLink.href = "";
+            }
         },
         
         _getStartDate: function(anime) {
