@@ -109,6 +109,11 @@
                 }
             }.bind(this))
         },
+        clearSelection: function() {
+           while (typeof this.$.genreMenu.selectedValues[0] === "string") {
+                this.$.genreMenu.select(this.$.genreMenu.selectedValues[0]);
+            }
+        },
         
         _filterGenres: function(genres,adultFilter) {
             if (!adultFilter) {

@@ -2,12 +2,20 @@
 Polymer({
     animeLookup: {},
     pendingAnimeLoad: 0,
+    defaultAnimeView: {
+        status:"Currently Airing",
+        full_page:true,
+    },
     
     is: 'body-view',
     properties: {
         loading: {
             type: Boolean,
             notify: true
+        },
+        initialLoaded: {
+            type: Boolean,
+            value: false
         },
         pendingFilters: {
             type: Boolean,
@@ -18,7 +26,8 @@ Polymer({
         sortBy: {
             type: String,
             notify: true,
-            value: "nextep"
+            value: "nextep",
+            observer: "_sortObserver"
         },
         sidebarSelected: {
             type: String,
@@ -68,7 +77,7 @@ Polymer({
     
     ready: function() {
         this.sidebarSelected = "options";
-        this._updateAnimeView({status:"Currently Airing",full_page:true,year:2015});
+        this._updateAnimeView(this.defaultAnimeView);
     },
     
     logEvent: function(e) {
@@ -76,6 +85,14 @@ Polymer({
     },
 
     //Observers
+    
+    _sortObserver: function(newV, oldV) {
+        if (!this.initialLoaded) {
+            return;
+        }
+        this._updateAnimesArray(this._animes.slice(0));
+    },
+    
     _drawerViewObserver: function(newV) {
         if (newV === "options") {
             this.toggleClass("hidden",true,this.$.backBtn);
@@ -113,6 +130,7 @@ Polymer({
         }
         var onSelectionChanged = function(changes) {
             this.pendingFilters = true;
+            console.log(changes);
         }.bind(this);
         newV.observer = new ArrayObserver(newV);
         newV.observer.open(onSelectionChanged);
@@ -128,7 +146,6 @@ Polymer({
     //HELPER FUNCTIONS
     _toggleSidebarButtons: function(toggle) {
         this.$.genreBtn.disabled = !toggle;
-        this.$.seasonsBtn.disabled = !toggle;
         this.$.sortBtn.disabled = !toggle;
         this.$.feedbackBtn.disabled = !toggle;
         this.$.aboutBtn.disabled = !toggle;
@@ -211,7 +228,10 @@ Polymer({
                     this._updateAnimeView(options);
                     break;
                 case "clearBtn":
-                    
+                    this.$.genres.clearSelection();
+                    this.sortBy = "nextep";
+                    this.$.reloadBtn.icon = "refresh";
+                    this._updateAnimeView(this.defaultAnimeView);
                     break;
             }
         }.bind(this),0);
@@ -239,6 +259,9 @@ Polymer({
                 var animeTemp = this._animesPreFilter.filter(this._filter,this);
                 this._toggleProgressBar(false);
                 this._updateAnimesArray(animeTemp);
+                if (!this.initialLoaded) {
+                    this.initialLoaded = true;
+                }
                 this.fire("notify-toast",{text:"Anime Loaded!"});
                 break;
         }        
@@ -252,7 +275,6 @@ Polymer({
     _updateAnimesArray: function(newArr) {
         //Use different sorters based on config.
         if (!!this._animeSorter[this.sortBy]) {
-            console.log(this._animeSorter[this.sortBy]);
             newArr.sort(this._animeSorter[this.sortBy].bind(this._animeSorter));
         }
         this.splice.apply(this,["_animes",0,this._animes.length].concat(newArr));
@@ -265,26 +287,25 @@ Polymer({
         nextep: function(arg1, arg2) {
             var cmp1 = 0;
             var cmp2 = 0;
-            if (!!arg1.airing) {
-                if(!!arg1.airing.time) {
-                    cmp1 = arg1.airing.time.getTime();
-                }
+            if (arg1.airing !== null) {
+                cmp1 = arg1.airing.time.getTime();
             }
-            if (!!arg2.airing) {
-                if(!!arg2.airing.time) {
-                    cmp2 = arg2.airing.time.getTime();
-                }
+            if (arg2.airing !== null) {
+                cmp2 = arg2.airing.time.getTime();
             }
-            if (cmp1 === 0 && cmp1 !== cmp2) {
+            if (cmp1 === 0 && cmp1 < cmp2) {
                 return 1;
             }
-            if (cmp1 === cmp2) {
+            if (cmp2 === 0 && cmp1 > cmp2) {
+                return -1;
+            }
+            if (cmp1 === 0 && cmp1 === cmp2) {
                 return this.name(arg1,arg2);
             }
             return cmp1 - cmp2;
         },
         popularity: function(arg1, arg2) {
-            return arg1.popularity - arg2.popularity;
+            return (arg1.popularity - arg2.popularity)*-1;
         },
         
     },

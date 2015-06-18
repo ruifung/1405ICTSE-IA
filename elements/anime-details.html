@@ -100,12 +100,13 @@
                     <span id="title">[[anime.title_romaji]]</span><br>
                     <span id="jptitle">Japanese Title: <span>[[anime.title_japanese]]</span></span><br>
                     <span id="altNames">Alternative Names: <span>[[altNames]]</span></span><br>
-                    <span id="popularity">Popularity Rank: <span>[[anime.popularity]]</span></span><br>
+                    <span id="popularity">Popularity Score: <span>[[anime.popularity]]</span></span><br>
                     <span id="airStatus">Airing Status: <span>[[anime.airing_status]]</span></span><br>
                     <span id="classification">Age Rating: <span>[[classification]]</span></span><br>
                     <span id="totalEps">Total Episodes: <span>[[anime.total_episodes]]</span></span><br>
                     <span id="startDate">First Episode Aired: <span>[[startDate]]</span></span><br>
                     <span id="endDate">Last Episode Aired: <span>[[endDate]]</span></span><br>
+                    <span id="nextEp">Next Episode Airing: <span id="nextEpTime"></span>[[anime.airing.time]]</span>
                     <span id="watchTrailer">Trailer: <a id="trailerLink" target="_blank">Watch on YouTube</a></span><br>
                     <span id="description">Description: </span><br>
                     <div id="descText"></div>
@@ -151,6 +152,7 @@
         },
         
         _animeChangedObserver: function(newV) {
+            console.log(newV)
             this.$.descText.innerHTML = newV.description;
             if (newV.youtube_id.length > 0) {
                 this.toggleClass("hidden",false,this.$.watchTrailer);
@@ -158,6 +160,11 @@
             } else {
                 this.toggleClass("hidden",true,this.$.watchTrailer);
                 this.$.trailerLink.href = "";
+            }
+            if (newV.airing_status === "currently airing") {
+                this.toggleClass("hidden",false,this.$.nextEp);
+            } else {
+                this.toggleClass("hidden",true,this.$.nextEp);
             }
         },
         

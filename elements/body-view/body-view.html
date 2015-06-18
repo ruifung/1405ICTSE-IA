@@ -51,8 +51,6 @@
                             <div>
                                 <paper-button raised id="genreBtn" class="optionsBtn" on-click="_onButtonClick">
                                     Filter by Genre</paper-button>
-                                <paper-button raised id="seasonsBtn" class="optionsBtn" on-click="_onButtonClick">
-                                    Filter by Season</paper-button>
                                 <paper-button raised id="sortBtn" class="optionsBtn" on-click="_onButtonClick">
                                     Sorting Options</paper-button>
                                 <paper-button raised id="feedbackBtn" class="optionsBtn" on-click="_onButtonClick">
@@ -63,21 +61,12 @@
                         </div>
                         <!-- Genre list selector -->
                         <genre-list id="genres" selected-genres="{{selectedGenres}}" filter-adult="[[filterAdult]]"></genre-list>
-                        <!-- Season selector -->
-                        <div id="seasons">
-                            <paper-radio-group>
-                                <paper-radio-button name="winter">Winter</paper-radio-button>
-                                <paper-radio-button name="summer">Summer</paper-radio-button>
-                                <paper-radio-button name="spring">Spring</paper-radio-button>
-                                <paper-radio-button name="Autumn">Autumn</paper-radio-button>
-                            </paper-radio-group>
-                        </div>
                         <div id="sorting">
                             <paper-item><h2>Sorting Options</h2></paper-item>
-                            <paper-menu title="Sorting options">
-                                <paper-item>Sort by Name</paper-item>
-                                <paper-item>Sort by Next Episode Airing Date</paper-item>
-                                <paper-item>Sort by Popularity</paper-item>
+                            <paper-menu title="Sorting options" selected="{{sortBy}}" attr-for-selected="sorter">
+                                <paper-item sorter="name">Sort by Name</paper-item>
+                                <paper-item sorter="nextep">Sort by Next Episode Airing Date</paper-item>
+                                <paper-item sorter="popularity">Sort by Popularity</paper-item>
                             </paper-menu>
                         </div>
                     </iron-pages>
