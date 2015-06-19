@@ -109,7 +109,6 @@ Polymer({
         if(!!this.$[newV].viewChanged) {
             this.$[newV].viewChanged(this.$[newV],this.$[oldV]);
         }
-        
     },
     _drawerStateObserver: function(newV) {
         switch(newV) {
@@ -142,7 +141,7 @@ Polymer({
             this.$.reloadBtn.icon = "refresh";
         }
     },
-
+    
     //HELPER FUNCTIONS
     _toggleSidebarButtons: function(toggle) {
         this.$.genreBtn.disabled = !toggle;
