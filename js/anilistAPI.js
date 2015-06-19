@@ -128,7 +128,6 @@ function aniListAPI() {
         If failed, second parameter is XMLHttpRequest object for additional information.
     */
     this.apiRequest = function (method, urlSuffix, requestData, callback) {
-        //console.log(arguments);
         // To simulate function overloading. =/
         try {
             if (!(method.toUpperCase() === "POST" || method.toUpperCase() === "GET")) {
